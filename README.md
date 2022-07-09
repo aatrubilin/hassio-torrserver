@@ -23,7 +23,7 @@ This project based on [https://github.com/YouROK/TorrServer](https://github.com/
 
 Got questions or problems?
 
-You can [open an issue here](/issue) GitHub.
+You can [open an issue here](https://github.com/aatrubilin/hassio-torrserver/issues) GitHub.
 Please keep in mind, that this software is only tested on amd64.
 
 ## Authors & contributors
