@@ -28,10 +28,10 @@ Please keep in mind, that this software is only tested on amd64.
 
 ## Authors & contributors
 
-The original TorrServer is developed by [YouROK].
-For more information please visit this page: [https://github.com/YouROK/TorrServer](https://github.com/YouROK/TorrServer)
+The original TorrServer is developed by [@YouROK](https://github.com/YouROK).
+For more information please visit this page: [YouROK/TorrServer](https://github.com/YouROK/TorrServer)
 
-The hassio addon is brought to you by [aatrubilin].
+The hassio addon is brought to you by [@aatrubilin](https://github.com/aatrubilin).
 
 ## License
 
