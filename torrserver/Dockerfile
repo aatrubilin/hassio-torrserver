@@ -7,8 +7,8 @@ RUN chmod a+x /run.sh
 
 # Setup base
 RUN apk add --no-cache \
-    coreutils=9.0-r2 \
-    wget=1.21.2-r2
+    coreutils=9.1-r0 \
+    wget=1.21.3-r0
 
 # Build arguments
 ARG BUILD_ARCH
@@ -41,5 +41,8 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+RUN mkdir -p /share/torrserver
+WORKDIR /share/torrserver
 
 CMD [ "/run.sh" ]
