@@ -8,6 +8,9 @@ echo "Set envs"
 
 TS_SOURCE="TorrServer-linux-${ARCH_MAP[${BUILD_ARCH}]}"
 TS_URL="https://github.com/YouROK/TorrServer/releases/latest/download/${TS_SOURCE}"
+
+echo "Checking latest torrserver version"
+
 TS_VERSION="$(curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest | jq -r '.tag_name')"
 TS_RUNFILE="/share/torrserver/TorrServer-${TS_VERSION}"
 
