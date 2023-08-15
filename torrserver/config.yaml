@@ -1,6 +1,6 @@
 ---
 name: TorrServer
-version: 0.1.5
+version: 0.1.6
 slug: torrserver
 description: TorrServer for home assistant
 url: https://github.com/aatrubilin/hassio-torrserver
