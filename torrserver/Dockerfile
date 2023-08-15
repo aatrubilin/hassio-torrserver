@@ -7,8 +7,8 @@ RUN chmod a+x /run.sh
 
 # Setup base
 RUN apk add --no-cache \
-    coreutils \
-    wget
+    coreutils=9.1-r0 \
+    wget=1.21.3-r0
 
 # Build arguments
 ARG BUILD_ARCH
