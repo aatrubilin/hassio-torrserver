@@ -3,7 +3,9 @@ set -euo pipefail
 
 echo "Build arch: ${BUILD_ARCH}"
 
-cat /etc/resolv.conf
+ping -c 4 google.com
+
+ping -c 4 github.com
 
 declare -A ARCH_MAP="( [armv7]=arm7 [amd64]=amd64 [i386]=386 [aarch64]=arm64 )"
 
