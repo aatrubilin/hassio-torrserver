@@ -11,8 +11,11 @@ echo "TS_SOURCE=${TS_SOURCE}"
 TS_URL="https://github.com/YouROK/TorrServer/releases/latest/download/${TS_SOURCE}"
 echo "TS_URL=${TS_URL}"
 
-echo "tst"
+echo "check curl version"
+curl --version
+echo "check release"
 curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest
+echo "check version"
 
 TS_VERSION="$(curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest | jq -r '.tag_name')"
 echo "TS_VERSION=${TS_VERSION}"
