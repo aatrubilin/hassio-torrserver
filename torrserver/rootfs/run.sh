@@ -3,6 +3,8 @@ set -euo pipefail
 
 echo "Build arch: ${BUILD_ARCH}"
 
+cat /etc/resolv.conf
+
 declare -A ARCH_MAP="( [armv7]=arm7 [amd64]=amd64 [i386]=386 [aarch64]=arm64 )"
 
 TS_SOURCE="TorrServer-linux-${ARCH_MAP[${BUILD_ARCH}]}"
