@@ -11,6 +11,8 @@ TS_URL="https://github.com/YouROK/TorrServer/releases/latest/download/${TS_SOURC
 TS_VERSION="$(curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest | jq -r '.tag_name')"
 TS_RUNFILE="/share/torrserver/TorrServer-${TS_VERSION}"
 
+echo "Checking existed torrserver"
+
 if [[ ! -f "$TS_RUNFILE" ]]
 then
     echo "Removing old file"
