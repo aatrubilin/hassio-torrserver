@@ -14,7 +14,7 @@ echo "TS_URL=${TS_URL}"
 echo "check curl version"
 curl --version
 echo "check release"
-curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest
+curl -svL https://api.github.com/repos/YouROK/TorrServer/releases/latest
 echo "check version"
 
 TS_VERSION="$(curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest | jq -r '.tag_name')"
