@@ -11,9 +11,6 @@ echo "TS_SOURCE=${TS_SOURCE}"
 TS_URL="https://github.com/YouROK/TorrServer/releases/latest/download/${TS_SOURCE}"
 echo "TS_URL=${TS_URL}"
 
-
-curl -svL https://api.github.com/repos/YouROK/TorrServer/releases/latest
-
 TS_VERSION="$(curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest | jq -r '.tag_name')"
 echo "TS_VERSION=${TS_VERSION}"
 
@@ -27,7 +24,7 @@ then
     echo "rm -f TorrServer-*"
 		rm -f TorrServer-*
 		echo "Downloading ${TS_SOURCE}-${TS_VERSION}..."
-		wget -O $TS_RUNFILE $TS_URL -v
+		wget -O $TS_RUNFILE $TS_URL -nv
 		echo "Change mode"
 		chmod a+x $TS_RUNFILE
 fi
