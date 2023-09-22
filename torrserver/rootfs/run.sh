@@ -5,9 +5,7 @@ DEBUG="$(bashio::config 'debug')"
 
 echo "Build arch: ${BUILD_ARCH}"
 
-echo $DEBUG
-
-if [[ $DEBUG ]]
+if [[ "$DEBUG" = true ]]
 then
     wget --version
     curl --version
