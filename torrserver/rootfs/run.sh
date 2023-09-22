@@ -7,7 +7,7 @@ echo "Build arch: ${BUILD_ARCH}"
 
 if [[ $DEBUG ]]
 then
-    gwet --version
+    wget --version
     curl --version
     curl -svL https://api.github.com/repos/YouROK/TorrServer/releases/latest
 fi
