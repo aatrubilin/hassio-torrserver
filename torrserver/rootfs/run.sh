@@ -1,7 +1,16 @@
 #!/usr/bin/with-contenv bashio
 set -euo pipefail
 
+DEBUG="$(bashio::config 'debug')"
+
 echo "Build arch: ${BUILD_ARCH}"
+
+if [[ $DEBUG ]]
+then
+    gwet --version
+    curl --version
+    curl -svL https://api.github.com/repos/YouROK/TorrServer/releases/latest
+fi
 
 declare -A ARCH_MAP="( [armv7]=arm7 [amd64]=amd64 [i386]=386 [aarch64]=arm64 )"
 
