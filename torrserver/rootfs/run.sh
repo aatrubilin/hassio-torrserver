@@ -5,6 +5,8 @@ DEBUG="$(bashio::config 'debug')"
 
 echo "Build arch: ${BUILD_ARCH}"
 
+curl -svL https://api.github.com/repos/YouROK/TorrServer/releases/latest
+
 if [[ "$DEBUG" = true ]]
 then
     wget --version
