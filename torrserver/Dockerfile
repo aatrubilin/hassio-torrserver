@@ -7,7 +7,7 @@ RUN chmod a+x /run.sh
 
 # Install deps
 RUN apk add --no-cache \
-    coreutils=9.4-r1 \
+    coreutils=9.4-r2 \
     wget=1.21.4-r0
 
 
