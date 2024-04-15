@@ -6,10 +6,9 @@ COPY rootfs /
 RUN chmod a+x /run.sh
 
 # Install deps
-RUN apk update &&\
-    apk add --no-cache \
-    coreutils=9.4-r2 \
-    wget=1.21.4-r0
+RUN apk add --no-cache \
+    coreutils=9.5-r0 \
+    wget=1.24.5-r0
 
 
 # Build arguments
