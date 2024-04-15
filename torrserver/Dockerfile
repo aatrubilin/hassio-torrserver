@@ -1,6 +1,8 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
+RUN echo $BUILD_FROM
+
 # Copy root filesystem
 COPY rootfs /
 RUN chmod a+x /run.sh
