@@ -14,8 +14,6 @@ fi
 
 declare -A ARCH_MAP="( [armv7]=arm7 [amd64]=amd64 [i386]=386 [aarch64]=arm64 [armhf]=arm7 )"
 
-# armhf, armv7, aarch64, amd64, i386.
-
 TS_SOURCE="TorrServer-linux-${ARCH_MAP[${BUILD_ARCH}]}"
 echo "TS_SOURCE=${TS_SOURCE}"
 
