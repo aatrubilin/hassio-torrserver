@@ -22,3 +22,5 @@ options:
   debug: false
 schema:
   debug: bool
+ingress: true
+ingress_port: 8090
