@@ -1,10 +1,9 @@
 #!/usr/bin/with-contenv bashio
 set -euo pipefail
 
-echo "Starting TorrServer-$(cat /VERSION), arch: ${BUILD_ARCH}"
+TS_VERSION=$(grep '\s*TS_VERSION: \w' build.yaml | sed 's/^.*: //')
 
-ls -la /
-ls -la /torrserver
+echo "Starting TorrServer-${TS_VERSION}, arch: ${BUILD_ARCH}"
 
 chmod a+x /torrserver
 

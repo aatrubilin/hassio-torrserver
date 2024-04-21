@@ -67,7 +67,7 @@ RUN apk add --no-cache --update ffmpeg
 
 # Copy files
 COPY ./.build/run.sh /run.sh
-COPY ./assets/VERSION /VERSION
+COPY ./build.yaml /etc/build.yaml
 
 # Add execution permissions
 RUN chmod a+x /run.sh
