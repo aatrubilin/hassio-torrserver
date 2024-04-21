@@ -1,11 +1,11 @@
 ---
 name: TorrServer
-version: 1.0.0-beta39
+version: 1.0.0-beta40
 slug: torrserver
 description: TorrServer for home assistant
 url: https://github.com/aatrubilin/hassio-torrserver
 codenotary: aatrubilin@gmail.com
-webui: http://[HOST]:[PORT:8090]
+# webui: http://[HOST]:[PORT:8090]
 init: false
 auth_api: true
 arch:
@@ -28,4 +28,4 @@ ports:
   8090/tcp: 8090
 ports_description:
   8090/tcp: TorrServer Web
-host_network: true
+startup: system
