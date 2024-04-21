@@ -19,7 +19,7 @@ echo "Selected arch: ${ARCH}"
 
 if [[ ! -f "$TS_EXEC" ]]
 then
-		echo "Downloading ${TS_SOURCE}-${TS_VERSION}..."
+		echo "Downloading TorrServer-${TS_VERSION}..."
 		wget -O $TS_EXEC https://github.com/aatrubilin/hassio-torrserver/releases/download/${TS_VERSION}/TorrServer-${ARCH} -nv
 		chmod a+x $TS_EXEC
 fi
