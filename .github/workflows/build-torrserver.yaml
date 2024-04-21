@@ -63,6 +63,8 @@ jobs:
           jq -c '. + { "homepage": "./" }' ./TorrServer/web/package.json --indent 2 > ./TorrServer/web/package.$$.json && mv ./TorrServer/web/package.$$.json ./TorrServer/web/package.json
           cat ./TorrServer/web/package.json
       - name: Run build
+        env:
+          REACT_APP_SERVER_HOST: "."
         working-directory: ./torrserver/.build/TorrServer
         run: |
           yarn --cwd ./web install && yarn --cwd ./web run build
