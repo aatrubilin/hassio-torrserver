@@ -15,6 +15,13 @@ jobs:
         run : echo ${{ github.event.release.tag_name }}
       - name: Checkout
         uses: actions/checkout@v3.3.0
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '^1.21.2'
 #      - name: Set up QEMU
 #        uses: docker/setup-qemu-action@v2.1.0
 #      - name: Set up Docker Buildx
@@ -38,10 +45,23 @@ jobs:
           echo "TS_VERSION=${TS_VERSION}" >> ${GITHUB_ENV}
       - name: CHECK ENVS
         run: |
-          echo REG_REPO=${{ env.REG_REPO }}
           echo TS_VERSION=${{ env.TS_VERSION }}
-      
-      
+      - name: Prepare TorrServer source
+        working-directory: ./torrserver/.build
+        run: |
+          git clone --depth 1 --branch $TS_VERSION https://github.com/YouROK/TorrServer.git
+          cp ./build-all.sh ./TorrServer/build-all.sh
+      - name: Run install web
+        working-directory: ./torrserver/.build/TorrServer/web
+        run: |
+          yarn install
+          export NODE_OPTIONS=--openssl-legacy-provider
+          export REACT_APP_SERVER_HOST="."
+          go run gen_web.go
+      - name: Check build
+        working-directory: ./torrserver/.build/TorrServer/web
+        run: |
+          ls ./build
 
 #      - name: Build and push
 #        uses: docker/build-push-action@v3.3.0
