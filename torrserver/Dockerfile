@@ -2,16 +2,6 @@ ARG BUILD_FROM
 ARG BUILD_ARCH
 ARG TS_VERSION
 
-FROM alpine:3.19.1 as download
-
-ARG BUILD_ARCH
-ARG TS_VERSION
-
-RUN apk add --no-cache wget
-
-RUN wget -O /torrserver https://github.com/aatrubilin/hassio-torrserver/releases/download/${TS_VERSION}/TorrServer-${BUILD_ARCH} -nv
-RUN echo "TorrServer-${BUILD_ARCH}" > /VERSION
-
 FROM $BUILD_FROM
 
 # Build arguments
@@ -43,10 +33,6 @@ LABEL \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
 
-# Copy torrserver
-COPY --from=download /torrserver /torrserver
-COPY --from=download /VERSION /VERSION
-
 # Environment variables
 ENV TS_CONF_PATH="/addon_config/config"
 ENV TS_LOG_PATH="/addon_config/log"
@@ -54,8 +40,8 @@ ENV TS_TORR_DIR="/addon_config/torrents"
 ENV TS_PORT=8090
 ENV BUILD_ARCH=$BUILD_ARCH
 
-# Install ffmpeg
-RUN apk add --no-cache --update ffmpeg
+# Install deps
+RUN apk add --no-cache coreutils=9.4-r2 wget=1.21.4-r0 ffmpeg
 
 # Copy files
 COPY ./.build/run.sh /run.sh
