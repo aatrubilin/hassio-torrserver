@@ -51,17 +51,10 @@ jobs:
         run: |
           git clone --depth 1 --branch $TS_VERSION https://github.com/YouROK/TorrServer.git
           cp ./build-all.sh ./TorrServer/build-all.sh
-      - name: Run install web
+      - name: Run build
         working-directory: ./torrserver/.build/TorrServer/web
         run: |
-          yarn install
-          export NODE_OPTIONS=--openssl-legacy-provider
-          export REACT_APP_SERVER_HOST="."
-          go run gen_web.go
-      - name: Check build
-        working-directory: ./torrserver/.build/TorrServer/web
-        run: |
-          ls ./build
+          ./build-all.sh
 
 #      - name: Build and push
 #        uses: docker/build-push-action@v3.3.0
