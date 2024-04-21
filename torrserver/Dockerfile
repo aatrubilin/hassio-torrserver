@@ -1,22 +1,12 @@
 ARG BUILD_FROM
 ARG BUILD_ARCH
+ARG TS_VERSION
 
-FROM $BUILD_FROM AS base-armv7
-COPY ./assets/TorrServer-linux-arm7 /torrserver
+FROM cirrusci/wget:latest as build
 
-FROM $BUILD_FROM AS base-armhf
-COPY ./assets/TorrServer-linux-arm7 /torrserver
+RUN wget -O /torrserver "https://github.com/aatrubilin/hassio-torrserver/releases/${TS_VERSION}/download/TorrServer-${BUILD_ARCH}" -nv
 
-FROM $BUILD_FROM AS base-amd64
-COPY ./assets/TorrServer-linux-amd64 /torrserver
-
-FROM $BUILD_FROM AS base-i386
-COPY ./assets/TorrServer-linux-386 /torrserver
-
-FROM $BUILD_FROM AS base-aarch64
-COPY ./assets/TorrServer-linux-arm64 /torrserver
-
-FROM base-${BUILD_ARCH}
+FROM $BUILD_FROM
 
 # Build arguments
 ARG BUILD_ARCH
@@ -54,11 +44,6 @@ ENV TS_TORR_DIR="/addon_config/torrents"
 ENV TS_PORT=8090
 ENV GODEBUG="madvdontneed=1"
 ENV BUILD_ARCH=$BUILD_ARCH
-
-# Create dirs
-RUN mkdir -p $TS_CONF_PATH
-RUN mkdir -p $TS_LOG_PATH
-RUN mkdir -p $TS_TORR_DIR
 
 # Install ffmpeg
 RUN apk add --no-cache --update ffmpeg

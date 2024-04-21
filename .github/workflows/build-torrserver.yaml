@@ -22,11 +22,11 @@ jobs:
         run: |
           TS_VERSION_LATEST="$(curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest | jq -r '.tag_name')"
           echo "TS_VERSION_LATEST=${TS_VERSION_LATEST}" >> ${GITHUB_ENV}
-      - name: Check assets version
+      - name: Check local version
         id: set_output
-        working-directory: ./torrserver/assets
+        working-directory: ./torrserver
         run: |
-          TS_VERSION_ASSETS=$(cat VERSION)
+          TS_VERSION_ASSETS=$(cat TS_VERSION)
           echo "TS version latest: ${TS_VERSION_LATEST}"
           echo "TS version assets: ${TS_VERSION_ASSETS}"
           if [[ "$TS_VERSION_LATEST" != "$TS_VERSION_ASSETS" ]]; then
