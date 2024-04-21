@@ -3,14 +3,12 @@ FROM $BUILD_FROM
 
 RUN echo $BUILD_FROM
 
-# Copy root filesystem
-COPY rootfs /
-RUN chmod a+x /run.sh
+#
+RUN declare -A ARCH_MAP="( [armv7]=arm7 [amd64]=amd64 [i386]=386 [aarch64]=arm64 [armhf]=arm7 )"
+RUN TS_SOURCE="TorrServer-linux-${ARCH_MAP[${BUILD_ARCH}]}"
 
-# Install deps
-RUN apk add --no-cache coreutils=9.4-r2
-RUN apk add --no-cache wget=1.21.4-r0
-
+COPY ./assets/$TS_SOURCE /torrserver
+RUN chmod a+x /torrserver
 
 # Build arguments
 ARG BUILD_ARCH
@@ -47,4 +45,4 @@ LABEL \
 RUN mkdir -p /share/torrserver
 WORKDIR /share/torrserver
 
-CMD [ "/run.sh" ]
+CMD [ "/torrserver" ]
