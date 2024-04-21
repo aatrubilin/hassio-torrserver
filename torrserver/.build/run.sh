@@ -3,6 +3,8 @@ set -euo pipefail
 
 ARCH="$(bashio::config 'arch')"
 
+ls -la /
+
 if [[ "$ARCH" = "auto" ]]
 then
     ARCH=$BUILD_ARCH
@@ -20,7 +22,7 @@ echo "Selected arch: ${ARCH}"
 if [[ ! -f "$TS_EXEC" ]]
 then
 		echo "Downloading TorrServer-${TS_VERSION}..."
-		wget -O $TS_EXEC https://github.com/aatrubilin/hassio-torrserver/releases/download/${TS_VERSION}/TorrServer-${ARCH} -nv
+		wget -O $TS_EXEC "https://github.com/aatrubilin/hassio-torrserver/releases/download/${TS_VERSION}/TorrServer-${ARCH}" -nv
 		chmod a+x $TS_EXEC
 fi
 
