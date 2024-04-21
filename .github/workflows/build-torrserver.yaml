@@ -15,17 +15,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3.3.0
+        with:
+          fetch-depth: 1
       - name: Get latest TorrServer version
         run: |
           TS_VERSION_LATEST="$(curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest | jq -r '.tag_name')"
           echo "TS_VERSION_LATEST=${TS_VERSION_LATEST}" >> ${GITHUB_ENV}
       - name: Check assets version
+        id: set_output
         working-directory: ./torrserver/assets
         run: |
           TS_VERSION_ASSETS=$(cat VERSION)
           echo "TS version latest: ${TS_VERSION_LATEST}"
           echo "TS version assets: ${TS_VERSION_ASSETS}"
-          if [[ "TS_VERSION_LATEST" != "TS_VERSION_ASSETS" ]]; then
+          if [[ "$TS_VERSION_LATEST" != "$TS_VERSION_ASSETS" ]]; then
             echo "Latest version is not equal version in assets"
             echo "::set-output name=build_assets::true"
           else
