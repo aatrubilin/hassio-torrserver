@@ -42,7 +42,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: tag number
-        run : echo ${{ github.event.release.tag_name }}
+        run: echo ${{ github.event.release.tag_name }}
+      - name: CHECK ENVS
+        run: |
+          echo TS_VERSION=${{ env.TS_VERSION }}
+          echo $TS_VERSION
       - name: Checkout
         uses: actions/checkout@v3.3.0
 
@@ -68,15 +72,6 @@ jobs:
           echo "REG_REPO=${REPO,,}" >>${GITHUB_ENV}
         env:
           REPO: '${{ github.repository }}'
-      - name: Set env
-        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
-      - name: Get latest TorrServer version
-        run: |
-          export TS_VERSION="$(curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest | jq -r '.tag_name')"
-          echo "TS_VERSION=${TS_VERSION}" >> ${GITHUB_ENV}
-      - name: CHECK ENVS
-        run: |
-          echo TS_VERSION=${{ env.TS_VERSION }}
       - name: Prepare TorrServer source
         working-directory: ./torrserver/.build
         run: |
@@ -86,7 +81,6 @@ jobs:
         working-directory: ./torrserver/.build/TorrServer
         run: |
           ./build-all.sh
-
       - name: Copy assets
         working-directory: ./torrserver
         run: |
