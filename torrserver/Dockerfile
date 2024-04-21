@@ -2,7 +2,7 @@ ARG BUILD_FROM
 ARG BUILD_ARCH
 ARG TS_VERSION
 
-FROM cirrusci/wget:latest as build
+FROM inutano/wget as download
 
 RUN wget -O /torrserver "https://github.com/aatrubilin/hassio-torrserver/releases/${TS_VERSION}/download/TorrServer-${BUILD_ARCH}" -nv
 
@@ -36,6 +36,9 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+# Copy torrserver
+COPY --from=download /torrserver /torrserver
 
 # Environment variables
 ENV TS_CONF_PATH="/addon_config/config"
