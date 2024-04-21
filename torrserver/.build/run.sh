@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv bashio
 set -euo pipefail
 
+export GODEBUG="madvdontneed=1"
+
 TS_VERSION=$(grep '\s*TS_VERSION: \w' /etc/build.yaml | sed 's/^.*: //')
 
 echo "Starting TorrServer-${TS_VERSION}, arch: ${BUILD_ARCH}"

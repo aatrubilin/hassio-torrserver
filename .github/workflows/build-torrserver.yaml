@@ -61,6 +61,7 @@ jobs:
           git clone --depth 1 --branch $TS_VERSION https://github.com/YouROK/TorrServer.git
           cp ./build-all.sh ./TorrServer/build-all.sh
           jq -c '. + { "homepage": "./" }' ./TorrServer/web/package.json --indent 2 > ./TorrServer/web/package.$$.json && mv ./TorrServer/web/package.$$.json ./TorrServer/web/package.json
+          cat /TorrServer/web/package.json
       - name: Run build
         working-directory: ./torrserver/.build/TorrServer
         run: |

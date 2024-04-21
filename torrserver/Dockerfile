@@ -50,7 +50,6 @@ ENV TS_CONF_PATH="/addon_config/config"
 ENV TS_LOG_PATH="/addon_config/log"
 ENV TS_TORR_DIR="/addon_config/torrents"
 ENV TS_PORT=8090
-ENV GODEBUG="madvdontneed=1"
 ENV BUILD_ARCH=$BUILD_ARCH
 
 # Install ffmpeg
