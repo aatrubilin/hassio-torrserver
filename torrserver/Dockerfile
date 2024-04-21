@@ -22,8 +22,6 @@ COPY ./assets/TorrServer-linux-arm64 /torrserver
 
 FROM base-${BUILD_ARCH}
 
-RUN chmod a+x /torrserver
-
 # Build arguments
 ARG BUILD_ARCH
 ARG BUILD_DATE
@@ -32,9 +30,6 @@ ARG BUILD_NAME
 ARG BUILD_REF
 ARG BUILD_REPOSITORY
 ARG BUILD_VERSION
-
-# Environment variables
-ENV BUILD_ARCH=$BUILD_ARCH
 
 # Labels
 LABEL \
@@ -56,7 +51,18 @@ LABEL \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
 
-RUN mkdir -p /share/torrserver
-WORKDIR /share/torrserver
+# Environment variables
+ENV TS_CONF_PATH="/addon_config/config"
+ENV TS_LOG_PATH="/addon_config/log"
+ENV TS_TORR_DIR="/addon_config/torrents"
+ENV TS_PORT=8090
+ENV GODEBUG="madvdontneed=1"
 
-CMD [ "/torrserver" ]
+# Create dirs
+RUN mkdir -p $TS_CONF_PATH
+RUN mkdir -p $TS_LOG_PATH
+RUN mkdir -p $TS_TORR_DIR
+
+RUN chmod a+x /torrserver
+
+ENTRYPOINT /torrserver --path $TS_CONF_PATH --logpath $TS_LOG_PATH --torrentsdir $TS_TORR_DIR --port $TS_PORT

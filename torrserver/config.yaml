@@ -1,6 +1,6 @@
 ---
 name: TorrServer
-version: 1.0.1
+version: 1.0.0-beta1
 slug: torrserver
 description: TorrServer for home assistant
 url: https://github.com/aatrubilin/hassio-torrserver
@@ -19,7 +19,7 @@ ports:
 ports_description:
   8090/tcp: TorrServer Web
 map:
-  - share:rw
+  - addon_config:rw
 options:
   debug: false
 schema:
