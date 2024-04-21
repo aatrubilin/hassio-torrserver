@@ -4,8 +4,14 @@ ARG TS_VERSION
 
 FROM inutano/wget as download
 
+RUN echo $BUILD_ARCH
+RUN echo $TS_VERSION
+
 ENV BUILD_ARCH=$BUILD_ARCH
 ENV TS_VERSION=$TS_VERSION
+
+RUN echo $BUILD_ARCH
+RUN echo $TS_VERSION
 
 RUN wget -O /torrserver https://github.com/aatrubilin/hassio-torrserver/releases/download/${TS_VERSION}/TorrServer-${BUILD_ARCH} -nv
 
