@@ -71,7 +71,6 @@ jobs:
       - name: Upx compressing
         working-directory: ./torrserver/.build/TorrServer/dist
         run: |
-          sudo apt-get update && apt-get install -y upx-ucl
           upx --best --lzma ./TorrServer-linux-arm7
           upx --best --lzma ./TorrServer-linux-amd64
           upx --best --lzma ./TorrServer-linux-386
