@@ -1,13 +1,27 @@
 ARG BUILD_FROM
-FROM $BUILD_FROM
+ARG BUILD_ARCH
 
-RUN echo $BUILD_FROM
 
-#
-RUN declare -A ARCH_MAP="( [armv7]=arm7 [amd64]=amd64 [i386]=386 [aarch64]=arm64 [armhf]=arm7 )"
-RUN TS_SOURCE="TorrServer-linux-${ARCH_MAP[${BUILD_ARCH}]}"
+FROM $BUILD_FROM AS base
+RUN echo $BUILD_ARCH
 
-COPY ./assets/$TS_SOURCE /torrserver
+FROM base AS base-armv7
+COPY ./assets/TorrServer-linux-arm7 /torrserver
+
+FROM base AS base-armhf
+COPY ./assets/TorrServer-linux-arm7 /torrserver
+
+FROM base AS base-amd64
+COPY ./assets/TorrServer-linux-amd64 /torrserver
+
+FROM base AS base-i386
+COPY ./assets/TorrServer-linux-386 /torrserver
+
+FROM base AS base-aarch64
+COPY ./assets/TorrServer-linux-arm64 /torrserver
+
+FROM base-${BUILD_ARCH}
+
 RUN chmod a+x /torrserver
 
 # Build arguments
