@@ -48,7 +48,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.3.0
       - name: Set Node.js 16.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 16.x
       - uses: actions/setup-go@v5
@@ -65,13 +65,14 @@ jobs:
       - name: Run build
         working-directory: ./torrserver/.build/TorrServer
         run: |
+          cd web
+          yarn run build
+          cd ..
           ./build-all.sh
-      - name: Copy assets
-        working-directory: ./torrserver
-        run: |
-          rm -rf ./assets
-          cp -r ./.build/TorrServer/dist ./assets
-          echo $TS_VERSION > ./assets/VERSION
+#      - name: Copy versi
+#        working-directory: ./torrserver
+#        run: |
+#          echo $TS_VERSION > ./VERSION
       - name: Release
         uses: actions/create-release@v1
         id: create_release
