@@ -65,9 +65,7 @@ jobs:
       - name: Run build
         working-directory: ./torrserver/.build/TorrServer
         run: |
-          cd web
-          yarn run build
-          cd ..
+          yarn run build --cwd ./web
           ./build-all.sh
 #      - name: Copy versi
 #        working-directory: ./torrserver
