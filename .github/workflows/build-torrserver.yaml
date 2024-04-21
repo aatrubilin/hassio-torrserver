@@ -66,12 +66,17 @@ jobs:
           REACT_APP_SERVER_HOST: "."
         working-directory: ./torrserver/.build/TorrServer
         run: |
+          apt-get install build-essential
           yarn --cwd ./web install && yarn --cwd ./web run build
           ./build-all.sh
-#      - name: Copy versi
-#        working-directory: ./torrserver
-#        run: |
-#          echo $TS_VERSION > ./VERSION
+      - name: Upx compressing
+        working-directory: ./torrserver/.build/TorrServer/dist
+        run: |
+          apt-get update && apt-get install -y upx-ucl
+          upx --best --lzma ./TorrServer-linux-arm7
+          upx --best --lzma ./TorrServer-linux-amd64
+          upx --best --lzma ./TorrServer-linux-386
+          upx --best --lzma ./TorrServer-linux-arm64
       - name: Release
         uses: actions/create-release@v1
         id: create_release
