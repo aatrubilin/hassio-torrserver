@@ -77,9 +77,9 @@ jobs:
         with:
           draft: false
           prerelease: false
-          release_name: ${{ TS_VERSION }}
-          tag_name: ${{ TS_VERSION }}
-          body: Bump ${{ TS_VERSION }}
+          release_name: ${{ env.TS_VERSION }}
+          tag_name: ${{ env.TS_VERSION }}
+          body: Bump ${{ env.TS_VERSION }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: upload armv7
