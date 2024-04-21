@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       run_build_assets: ${{ steps.set_output.outputs.build_assets }}
+      ts_version_latest: ${{ steps.set_output.outputs.ts_version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3.3.0
@@ -30,16 +31,19 @@ jobs:
           echo "TS version assets: ${TS_VERSION_ASSETS}"
           if [[ "$TS_VERSION_LATEST" != "$TS_VERSION_ASSETS" ]]; then
             echo "Latest version is not equal version in assets"
-            echo "::set-output name=build_assets::true"
+            echo "build_assets=true" >> "$GITHUB_OUTPUT"
+            echo "ts_version=${TS_VERSION_LATEST}" >> "$GITHUB_OUTPUT"
           else
             echo "Latest version is the same as in assets"
-            echo "::set-output name=build_assets::false"
+            echo "build_assets=false" >> "$GITHUB_OUTPUT"
           fi
 
   buildAssets:
     needs: [ checkTSVersion ]
     if: needs.checkTSVersion.outputs.run_build_assets == 'true'
     runs-on: ubuntu-latest
+    env:
+      TS_VERSION: ${{ needs.checkTSVersion.outputs.ts_version_latest }}
     steps:
       - name: tag number
         run: echo ${{ github.event.release.tag_name }}
@@ -67,11 +71,11 @@ jobs:
 #          registry: ghcr.io
 #          username: ${{ github.actor }}
 #          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: set lower case owner name
-        run: |
-          echo "REG_REPO=${REPO,,}" >>${GITHUB_ENV}
-        env:
-          REPO: '${{ github.repository }}'
+#      - name: set lower case owner name
+#        run: |
+#          echo "REG_REPO=${REPO,,}" >>${GITHUB_ENV}
+#        env:
+#          REPO: '${{ github.repository }}'
       - name: Prepare TorrServer source
         working-directory: ./torrserver/.build
         run: |
