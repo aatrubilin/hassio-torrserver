@@ -1,9 +1,10 @@
+FROM inutano/wget as download
+
 ARG BUILD_FROM
 ARG BUILD_ARCH
 ARG TS_VERSION
 
-FROM inutano/wget as download
-
+RUN echo "test"
 RUN echo $BUILD_ARCH
 RUN echo $TS_VERSION
 
