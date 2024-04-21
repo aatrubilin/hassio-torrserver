@@ -4,7 +4,7 @@ ARG TS_VERSION
 
 FROM inutano/wget as download
 
-RUN wget -O /torrserver "https://github.com/aatrubilin/hassio-torrserver/releases/${TS_VERSION}/download/TorrServer-${BUILD_ARCH}" -nv
+RUN wget -O /torrserver "https://github.com/aatrubilin/hassio-torrserver/releases/download/${TS_VERSION}/TorrServer-${BUILD_ARCH}" -nv
 
 FROM $BUILD_FROM
 
