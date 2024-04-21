@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 PLATFORMS=(
   'linux/amd64'
@@ -40,7 +41,7 @@ OUTPUT="${ROOT}/dist/TorrServer"
 
 #### Build web
 echo "Build web"
-export NODE_OPTIONS=--openssl-legacy-provider
+# export NODE_OPTIONS=--openssl-legacy-provider
 export REACT_APP_SERVER_HOST="."
 $GOBIN run gen_web.go
 
