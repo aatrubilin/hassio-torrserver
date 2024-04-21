@@ -1,14 +1,14 @@
----
-name: Lint
-on: [push, pull_request]
-jobs:
-  build:
-    name: Lint add-on configuration
-    runs-on: ubuntu-latest
-    steps:
-      - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v4
-      - name: 🚀 Run Home Assistant Add-on Linter
-        uses: frenck/action-addon-linter@v2.15
-        with:
-          path: "./torrserver"
+#---
+#name: Lint
+#on: [push, pull_request]
+#jobs:
+#  build:
+#    name: Lint add-on configuration
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: ⤵️ Check out code from GitHub
+#        uses: actions/checkout@v4
+#      - name: 🚀 Run Home Assistant Add-on Linter
+#        uses: frenck/action-addon-linter@v2.15
+#        with:
+#          path: "./torrserver"

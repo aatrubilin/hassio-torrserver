@@ -1,9 +1,11 @@
 ---
 name: build-torrserver
 
-on:
-  release:
-    types: [published]
+#on:
+#  release:
+#    types: [published]
+
+on: [push, pull_request]
 
 jobs:
   docker:
