@@ -55,15 +55,16 @@ jobs:
         working-directory: ./torrserver/.build/TorrServer
         run: |
           ./build-all.sh
-      - name: Check builds
+      - name: Copy assets
         working-directory: ./torrserver
         run: |
           rm -rf ./assets
-          cp ./.build/TorrServer/dist ./assets
-      - uses: EndBug/add-and-commit@v9
+          cp -r ./.build/TorrServer/dist ./assets
+      - name: Commit assets
+        uses: EndBug/add-and-commit@v9
         with:
           add: ./torrserver/assets
-          message: 'chore: Added TorrServer assets'
+          message: 'chore: added assets'
 
 #      - name: Build and push
 #        uses: docker/build-push-action@v3.3.0
