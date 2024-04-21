@@ -52,11 +52,11 @@ jobs:
           git clone --depth 1 --branch $TS_VERSION https://github.com/YouROK/TorrServer.git
           cp ./build-all.sh ./TorrServer/build-all.sh
       - name: Run build
-        working-directory: ./torrserver/.build/TorrServer/web
+        working-directory: ./torrserver/.build/TorrServer
         run: |
           ./build-all.sh
       - name: Check builds
-        working-directory: ./torrserver/.build/TorrServer/
+        working-directory: ./torrserver/.build/TorrServer
         run: |
           ls ./dist
 
