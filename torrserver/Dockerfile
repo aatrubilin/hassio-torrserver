@@ -69,6 +69,5 @@ COPY ./assets/VERSION /VERSION
 
 # Add execution permissions
 RUN chmod a+x /run.sh
-RUN chmod a+x /torrserver
 
 CMD [ "/run.sh" ]
