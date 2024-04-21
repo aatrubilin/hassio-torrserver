@@ -12,7 +12,7 @@ then
     curl -svL https://api.github.com/repos/YouROK/TorrServer/releases/latest
 fi
 
-declare -A ARCH_MAP="( [armv7]=arm7 [amd64]=amd64 [i386]=386 [aarch64]=arm64 [armhf]=arm7 )"
+declare -A ARCH_MAP="( [armv7]=arm7 [amd64]=amd64 [i386]=386 [aarch64]=arm64 )"
 
 TS_SOURCE="TorrServer-linux-${ARCH_MAP[${BUILD_ARCH}]}"
 echo "TS_SOURCE=${TS_SOURCE}"
