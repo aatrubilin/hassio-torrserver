@@ -2,7 +2,7 @@ ARG BUILD_FROM
 ARG BUILD_ARCH
 ARG TS_VERSION
 
-FROM inutano/wget as download
+FROM jgoclawski/wget:1.0 as download
 
 ARG BUILD_FROM
 ARG BUILD_ARCH
