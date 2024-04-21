@@ -1,23 +1,19 @@
 ARG BUILD_FROM
 ARG BUILD_ARCH
 
-
-FROM $BUILD_FROM AS base
-RUN echo $BUILD_ARCH
-
-FROM base AS base-armv7
+FROM $BUILD_FROM AS base-armv7
 COPY ./assets/TorrServer-linux-arm7 /torrserver
 
-FROM base AS base-armhf
+FROM $BUILD_FROM AS base-armhf
 COPY ./assets/TorrServer-linux-arm7 /torrserver
 
-FROM base AS base-amd64
+FROM $BUILD_FROM AS base-amd64
 COPY ./assets/TorrServer-linux-amd64 /torrserver
 
-FROM base AS base-i386
+FROM $BUILD_FROM AS base-i386
 COPY ./assets/TorrServer-linux-386 /torrserver
 
-FROM base AS base-aarch64
+FROM $BUILD_FROM AS base-aarch64
 COPY ./assets/TorrServer-linux-arm64 /torrserver
 
 FROM base-${BUILD_ARCH}
@@ -63,6 +59,15 @@ RUN mkdir -p $TS_CONF_PATH
 RUN mkdir -p $TS_LOG_PATH
 RUN mkdir -p $TS_TORR_DIR
 
+# Install ffmpeg
+RUN apk add --no-cache --update ffmpeg
+
+# Copy files
+COPY ./.build/run.sh /run.sh
+COPY ./assets/VERSION /VERSION
+
+# Add execution permissions
+RUN chmod a+x /run.sh
 RUN chmod a+x /torrserver
 
-ENTRYPOINT /torrserver
+CMD [ "/run.sh" ]
