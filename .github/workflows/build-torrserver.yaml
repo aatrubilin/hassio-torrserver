@@ -39,7 +39,7 @@ jobs:
           fi
 
   buildAssets:
-    needs: [ checkTSVersion ]
+    needs: [checkTSVersion]
     if: needs.checkTSVersion.outputs.run_build_assets == 'true'
     runs-on: ubuntu-latest
     env:
@@ -53,7 +53,7 @@ jobs:
           node-version: 16.x
       - uses: actions/setup-go@v5
         with:
-          go-version: '^1.21.2'
+          go-version: "^1.21.2"
       - name: Prepare TorrServer source
         working-directory: ./torrserver/.build
         run: |
@@ -73,4 +73,4 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           add: ./torrserver/assets
-          message: 'chore: added assets'
+          message: "chore: added assets"
