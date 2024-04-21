@@ -8,39 +8,39 @@ name: build-torrserver
 on: [push, pull_request]
 
 jobs:
-  checkTSVersion:
-    runs-on: ubuntu-latest
-    outputs:
-      run_build_assets: ${{ steps.set_output.outputs.build_assets }}
-      ts_version_latest: ${{ steps.set_output.outputs.ts_version }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3.3.0
-        with:
-          fetch-depth: 1
-      - name: Get latest TorrServer version
-        run: |
-          TS_VERSION_LATEST="$(curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest | jq -r '.tag_name')"
-          echo "TS_VERSION_LATEST=${TS_VERSION_LATEST}" >> ${GITHUB_ENV}
-      - name: Check local version
-        id: set_output
-        working-directory: ./torrserver
-        run: |
-          TS_VERSION_ASSETS=$(cat TS_VERSION)
-          echo "TS version latest: ${TS_VERSION_LATEST}"
-          echo "TS version assets: ${TS_VERSION_ASSETS}"
-          if [[ "$TS_VERSION_LATEST" != "$TS_VERSION_ASSETS" ]]; then
-            echo "Latest version is not equal version in assets"
-            echo "build_assets=true" >> "$GITHUB_OUTPUT"
-            echo "ts_version=${TS_VERSION_LATEST}" >> "$GITHUB_OUTPUT"
-          else
-            echo "Latest version is the same as in assets"
-            echo "build_assets=false" >> "$GITHUB_OUTPUT"
-          fi
+#  checkTSVersion:
+#    runs-on: ubuntu-latest
+#    outputs:
+#      run_build_assets: ${{ steps.set_output.outputs.build_assets }}
+#      ts_version_latest: ${{ steps.set_output.outputs.ts_version }}
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3.3.0
+#        with:
+#          fetch-depth: 1
+#      - name: Get latest TorrServer version
+#        run: |
+#          TS_VERSION_LATEST="$(curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest | jq -r '.tag_name')"
+#          echo "TS_VERSION_LATEST=${TS_VERSION_LATEST}" >> ${GITHUB_ENV}
+#      - name: Check local version
+#        id: set_output
+#        working-directory: ./torrserver
+#        run: |
+#          TS_VERSION_ASSETS=$(cat TS_VERSION)
+#          echo "TS version latest: ${TS_VERSION_LATEST}"
+#          echo "TS version assets: ${TS_VERSION_ASSETS}"
+#          if [[ "$TS_VERSION_LATEST" != "$TS_VERSION_ASSETS" ]]; then
+#            echo "Latest version is not equal version in assets"
+#            echo "build_assets=true" >> "$GITHUB_OUTPUT"
+#            echo "ts_version=${TS_VERSION_LATEST}" >> "$GITHUB_OUTPUT"
+#          else
+#            echo "Latest version is the same as in assets"
+#            echo "build_assets=false" >> "$GITHUB_OUTPUT"
+#          fi
 
   buildAssets:
     needs: [checkTSVersion]
-    if: needs.checkTSVersion.outputs.run_build_assets == 'true'
+    #if: needs.checkTSVersion.outputs.run_build_assets == 'true'
     runs-on: ubuntu-latest
     env:
       TS_VERSION: ${{ needs.checkTSVersion.outputs.ts_version_latest }}

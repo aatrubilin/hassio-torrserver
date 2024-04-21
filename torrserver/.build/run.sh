@@ -8,7 +8,8 @@ then
     ARCH=$BUILD_ARCH
 fi
 
-TS_VERSION=$(grep '\s*TS_VERSION: \w' /etc/build.yaml | sed 's/^.*: //')
+TS_VERSION=$(cat TS_VERSION)
+#TS_VERSION=$(grep '\s*TS_VERSION: \w' /etc/build.yaml | sed 's/^.*: //')
 TS_EXEC="/addon_config/TorrServer-${ARCH}"
 
 echo "TorrServer version: ${TS_VERSION}"

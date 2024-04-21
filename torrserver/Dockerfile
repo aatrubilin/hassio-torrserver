@@ -45,7 +45,7 @@ RUN apk add --no-cache coreutils=9.4-r2 wget=1.21.4-r0 ffmpeg
 
 # Copy files
 COPY ./.build/run.sh /run.sh
-COPY ./build.yaml /etc/build.yaml
+COPY ./TS_VERSION /TS_VERSION
 
 # Add execution permissions
 RUN chmod a+x /run.sh
