@@ -65,4 +65,4 @@ RUN mkdir -p $TS_TORR_DIR
 
 RUN chmod a+x /torrserver
 
-ENTRYPOINT /torrserver --path $TS_CONF_PATH --logpath $TS_LOG_PATH --torrentsdir $TS_TORR_DIR --port $TS_PORT
+ENTRYPOINT /torrserver
