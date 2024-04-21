@@ -57,6 +57,7 @@ jobs:
       - name: Prepare TorrServer source
         working-directory: ./torrserver/.build
         run: |
+          rm -rf TorrServer
           git clone --depth 1 --branch $TS_VERSION https://github.com/YouROK/TorrServer.git
           cp ./build-all.sh ./TorrServer/build-all.sh
           jq -c '. + { "homepage": "./" }' ./TorrServer/web/package.json --indent 2 > ./TorrServer/web/package.$$.json && mv ./TorrServer/web/package.$$.json ./TorrServer/web/package.json
@@ -70,8 +71,59 @@ jobs:
           rm -rf ./assets
           cp -r ./.build/TorrServer/dist ./assets
           echo $TS_VERSION > ./assets/VERSION
-      - name: Commit assets
-        uses: EndBug/add-and-commit@v9
+      - name: Release
+        uses: actions/create-release@v1
+        id: create_release
         with:
-          add: ./torrserver/assets
-          message: "chore: added assets"
+          draft: false
+          prerelease: false
+          release_name: $TS_VERSION
+          tag_name: $TS_VERSION
+          body_path: Bump $TS_VERSION
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: upload armv7
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./torrserver/.build/TorrServer/.build/TorrServer/dist/TorrServer-linux-arm7
+          asset_name: TorrServer-arm7
+          asset_content_type: application/octet-stream
+      - name: upload armv7
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./torrserver/.build/TorrServer/.build/TorrServer/dist/TorrServer-linux-arm7
+          asset_name: TorrServer-armhf
+          asset_content_type: application/octet-stream
+      - name: upload amd64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./torrserver/.build/TorrServer/.build/TorrServer/dist/TorrServer-linux-amd64
+          asset_name: TorrServer-amd64
+          asset_content_type: application/octet-stream
+      - name: upload i386
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./torrserver/.build/TorrServer/.build/TorrServer/dist/TorrServer-linux-386
+          asset_name: TorrServer-i386
+          asset_content_type: application/octet-stream
+      - name: upload aarch64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./torrserver/.build/TorrServer/.build/TorrServer/dist/TorrServer-linux-arm64
+          asset_name: TorrServer-aarch64
+          asset_content_type: application/octet-stream
