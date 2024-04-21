@@ -19,6 +19,15 @@ set_goarm() {
     GO_ARM=""
   fi
 }
+# use softfloat for mips builds
+set_gomips() {
+  if [[ "$1" =~ mips ]]; then
+    if [[ "$1" =~ mips(64) ]]; then MIPS64="${BASH_REMATCH[1]}"; fi
+    GO_MIPS="GOMIPS${MIPS64}=softfloat"
+  else
+    GO_MIPS=""
+  fi
+}
 
 GOBIN="go"
 
@@ -31,7 +40,6 @@ OUTPUT="${ROOT}/dist/TorrServer"
 
 #### Build web
 echo "Build web"
-export NODE_OPTIONS=--openssl-legacy-provider
 export REACT_APP_SERVER_HOST="."
 $GOBIN run gen_web.go
 
@@ -49,8 +57,12 @@ BUILD_FLAGS="-ldflags=${LDFLAGS} -tags=nosqlite -trimpath"
 
 for PLATFORM in "${PLATFORMS[@]}"; do
   GOOS=${PLATFORM%/*}
-  BIN_FILENAME="${OUTPUT}-${GOOS}-${GOARM}"
-  CMD="GOOS=${GOOS} ${GO_ARM} ${GO_MIPS} ${GOBIN} build ${BUILD_FLAGS} -o ${BIN_FILENAME} ./cmd"
+  GOARCH=${PLATFORM#*/}
+  set_goarm "$GOARCH"
+  set_gomips "$GOARCH"
+  BIN_FILENAME="${OUTPUT}-${GOOS}-${GOARCH}${GOARM}"
+  if [[ "${GOOS}" == "windows" ]]; then BIN_FILENAME="${BIN_FILENAME}.exe"; fi
+  CMD="GOOS=${GOOS} GOARCH=${GOARCH} ${GO_ARM} ${GO_MIPS} ${GOBIN} build ${BUILD_FLAGS} -o ${BIN_FILENAME} ./cmd"
   echo "${CMD}"
-  eval "$CMD" || FAILURES="${FAILURES} ${GOOS}/${GOARM}"
+  eval "$CMD" || FAILURES="${FAILURES} ${GOOS}/${GOARCH}${GOARM}"
 done
