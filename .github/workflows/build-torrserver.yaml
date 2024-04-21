@@ -55,6 +55,10 @@ jobs:
         working-directory: ./torrserver/.build/TorrServer/web
         run: |
           ./build-all.sh
+      - name: Check builds
+        working-directory: ./torrserver/.build/TorrServer/
+        run: |
+          ls ./dist
 
 #      - name: Build and push
 #        uses: docker/build-push-action@v3.3.0
