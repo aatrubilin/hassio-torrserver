@@ -79,7 +79,7 @@ jobs:
           prerelease: false
           release_name: $TS_VERSION
           tag_name: $TS_VERSION
-          body_path: Bump $TS_VERSION
+          body: Bump $TS_VERSION
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: upload armv7
