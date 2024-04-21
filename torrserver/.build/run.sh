@@ -7,6 +7,10 @@ TS_VERSION=$(grep '\s*TS_VERSION: \w' /etc/build.yaml | sed 's/^.*: //')
 
 echo "Starting TorrServer-${TS_VERSION}, arch: ${BUILD_ARCH}"
 
+ls -la /
+
+cat /VERSION
+
 chmod a+x /torrserver
 
 FLAGS="--path $TS_CONF_PATH --logpath $TS_LOG_PATH --port $TS_PORT --torrentsdir $TS_TORR_DIR"

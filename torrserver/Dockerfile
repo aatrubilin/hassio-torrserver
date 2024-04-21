@@ -10,6 +10,7 @@ ARG TS_VERSION
 RUN apk add --no-cache wget
 
 RUN wget -O /torrserver https://github.com/aatrubilin/hassio-torrserver/releases/download/${TS_VERSION}/TorrServer-${BUILD_ARCH} -nv
+RUN echo "TorrServer-${BUILD_ARCH}" > /VERSION
 
 FROM $BUILD_FROM
 
@@ -44,6 +45,7 @@ LABEL \
 
 # Copy torrserver
 COPY --from=download /torrserver /torrserver
+COPY --from=download /VERSION /VERSION
 
 # Environment variables
 ENV TS_CONF_PATH="/addon_config/config"

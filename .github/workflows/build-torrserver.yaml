@@ -51,9 +51,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 16.x
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "^1.21.2"
       - name: Prepare TorrServer source
         working-directory: ./torrserver/.build
         run: |
@@ -61,6 +58,9 @@ jobs:
           git clone --depth 1 --branch $TS_VERSION https://github.com/YouROK/TorrServer.git
           cp ./build-all.sh ./TorrServer/build-all.sh
           jq -c '. + { "homepage": "./" }' ./TorrServer/web/package.json --indent 2 > ./TorrServer/web/package.$$.json && mv ./TorrServer/web/package.$$.json ./TorrServer/web/package.json
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: ./torrserver/.build/TorrServer/server/go.mod
       - name: Run build
         env:
           REACT_APP_SERVER_HOST: "."
