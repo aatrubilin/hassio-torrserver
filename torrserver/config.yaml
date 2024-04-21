@@ -1,6 +1,6 @@
 ---
 name: TorrServer
-version: 1.0.0-beta33
+version: 1.0.0-beta34
 slug: torrserver
 description: TorrServer for home assistant
 url: https://github.com/aatrubilin/hassio-torrserver
@@ -25,12 +25,6 @@ options:
   arch: auto
 schema:
   debug: bool
-  arch:
-    - auto
-    - armv7
-    - armhf
-    - amd64
-    - i386
-    - aarch64
+  arch: list(auto|armv7|armhf|amd64|i386|aarch64)
 ingress: true
 ingress_port: 8090
