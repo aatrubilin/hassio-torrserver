@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-echo "Built from ${BUILD_FROM}"
+echo "Base image: ${BUILD_FROM}"
 
 set -euo pipefail
 
@@ -20,6 +20,6 @@ export GODEBUG="madvdontneed=1"
 
 FLAGS="--path $TS_CONF_PATH --logpath $TS_LOG_PATH --port $TS_PORT --torrentsdir $TS_TORR_DIR"
 
-echo "Starting ${TS_EXEC} ${FLAGS}"
+echo "Starting torrserver ${FLAGS}"
 
-$TS_EXEC $FLAGS
+torrserver $FLAGS
