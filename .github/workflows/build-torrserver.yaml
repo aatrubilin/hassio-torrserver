@@ -8,119 +8,79 @@ name: build-torrserver
 on: [push, pull_request]
 
 jobs:
-#  checkTSVersion:
-#    runs-on: ubuntu-latest
-#    outputs:
-#      run_build_assets: ${{ steps.set_output.outputs.build_assets }}
-#      ts_version_latest: ${{ steps.set_output.outputs.ts_version }}
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3.3.0
-#        with:
-#          fetch-depth: 1
-#      - name: Get latest TorrServer version
-#        run: |
-#          TS_VERSION_LATEST="$(curl -sL https://api.github.com/repos/YouROK/TorrServer/releases/latest | jq -r '.tag_name')"
-#          echo "TS_VERSION_LATEST=${TS_VERSION_LATEST}" >> ${GITHUB_ENV}
-#      - name: Check local version
-#        id: set_output
-#        working-directory: ./torrserver
-#        run: |
-#          TS_VERSION_ASSETS=$(cat TS_VERSION)
-#          echo "TS version latest: ${TS_VERSION_LATEST}"
-#          echo "TS version assets: ${TS_VERSION_ASSETS}"
-#          if [[ "$TS_VERSION_LATEST" != "$TS_VERSION_ASSETS" ]]; then
-#            echo "Latest version is not equal version in assets"
-#            echo "build_assets=true" >> "$GITHUB_OUTPUT"
-#            echo "ts_version=${TS_VERSION_LATEST}" >> "$GITHUB_OUTPUT"
-#          else
-#            echo "Latest version is the same as in assets"
-#            echo "build_assets=false" >> "$GITHUB_OUTPUT"
-#          fi
+  # TS_VERSION_ASSETS=$(cat TS_VERSION)
+  ##          echo "TS version latest: ${TS_VERSION_LATEST}"
+  ##          echo "TS version assets: ${TS_VERSION_ASSETS}"
+  ##          if [[ "$TS_VERSION_LATEST" != "$TS_VERSION_ASSETS" ]]; then
+  ##            echo "Latest version is not equal version in assets"
+  ##            echo "build_assets=true" >> "$GITHUB_OUTPUT"
+  ##            echo "ts_version=${TS_VERSION_LATEST}" >> "$GITHUB_OUTPUT"
+  ##          else
+  ##            echo "Latest version is the same as in assets"
+  ##            echo "build_assets=false" >> "$GITHUB_OUTPUT"
+  ##          fi
 
   buildAssets:
     needs: [checkTSVersion]
-    #if: needs.checkTSVersion.outputs.run_build_assets == 'true'
     runs-on: ubuntu-latest
-    env:
-      TS_VERSION: ${{ needs.checkTSVersion.outputs.ts_version_latest }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3.3.0
-      - name: Set Node.js 16.x
-        uses: actions/setup-node@v4
-        with:
-          node-version: 16.x
-      - name: Prepare TorrServer source
+
+      - name: Prepare envs
+        working-directory: ./torrserver
+        run: |
+          VERSION=$(grep '^version: \w' config.yaml | sed 's/^.*: //')
+          echo "Version: ${VERSION}"
+          echo "VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "VERSION_ADDON=$(echo $VERSION | cut -d "-" -f 1)" >> "$GITHUB_OUTPUT"
+          echo "VERSION_TS=$(echo $VERSION | cut -d "-" -f 2)" >> "$GITHUB_OUTPUT"
+          echo "VERSION_META=$(echo $VERSION | cut -d "-" -f 3)" >> "$GITHUB_OUTPUT"
+
+      - name: Prepare source
         working-directory: ./torrserver/.build
         run: |
-          rm -rf TorrServer
-          git clone --depth 1 --branch $TS_VERSION https://github.com/YouROK/TorrServer.git
-          cp ./build-all.sh ./TorrServer/build-all.sh
-          jq -c '. + { "homepage": "./" }' ./TorrServer/web/package.json --indent 2 > ./TorrServer/web/package.$$.json && mv ./TorrServer/web/package.$$.json ./TorrServer/web/package.json
-      - uses: actions/setup-go@v5
+          rm -rf src
+          echo "Clone TorrServer-${VERSION_TS}"
+          git clone --depth 1 --branch $VERSION_TS https://github.com/YouROK/TorrServer.git src
+          echo "Set relative path for staticfiles"
+          jq -c '. + { "homepage": "./" }' ./src/web/package.json --indent 2 > ./src/web/package.$$.json
+          mv ./src/web/package.$$.json ./src/web/package.json
+#
+#      - name: Set Node.js 16.x
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 16.x
+#          cache: yarn
+#          cache-dependency-path: ./torrserver/.build/TorrServer/web/package.json
+#
+#      - name: Build frontend
+#        env:
+#          REACT_APP_SERVER_HOST: "."  # Relative path for api endpoints
+#        working-directory: ./torrserver/.build/TorrServer/web
+#        run: |
+#          yarn install
+#          yarn run build
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2.1.0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2.2.1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2.1.0
         with:
-          go-version-file: ./torrserver/.build/TorrServer/server/go.mod
-      - name: Run build
-        env:
-          REACT_APP_SERVER_HOST: "."
-        working-directory: ./torrserver/.build/TorrServer
-        run: |
-          yarn --cwd ./web install && yarn --cwd ./web run build
-          ./build-all.sh
-      - name: Release
-        uses: actions/create-release@v1
-        id: create_release
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v3.3.0
         with:
-          draft: false
-          prerelease: false
-          release_name: ${{ env.TS_VERSION }}
-          tag_name: ${{ env.TS_VERSION }}
-          body: Bump ${{ env.TS_VERSION }}
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      - name: upload armv7
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./torrserver/.build/TorrServer/dist/TorrServer-linux-arm7
-          asset_name: TorrServer-arm7
-          asset_content_type: application/octet-stream
-      - name: upload armv7
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./torrserver/.build/TorrServer/dist/TorrServer-linux-arm7
-          asset_name: TorrServer-armhf
-          asset_content_type: application/octet-stream
-      - name: upload amd64
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./torrserver/.build/TorrServer/dist/TorrServer-linux-amd64
-          asset_name: TorrServer-amd64
-          asset_content_type: application/octet-stream
-      - name: upload i386
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./torrserver/.build/TorrServer/dist/TorrServer-linux-386
-          asset_name: TorrServer-i386
-          asset_content_type: application/octet-stream
-      - name: upload aarch64
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./torrserver/.build/TorrServer/dist/TorrServer-linux-arm64
-          asset_name: TorrServer-aarch64
-          asset_content_type: application/octet-stream
+          context: ./torrserver/.build
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ env.GITHUB_REPOSITORY }}:${{ env.VERSION }}
+            ghcr.io/${{ env.GITHUB_REPOSITORY }}:latest
