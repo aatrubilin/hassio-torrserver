@@ -1,0 +1,7 @@
+---
+build_from:
+  armv7: ghcr.io/aatrubilin/hassio-torrserver:1.0.0-MatriX.132-alpha1
+  armhf: ghcr.io/aatrubilin/hassio-torrserver:1.0.0-MatriX.132-alpha1
+  amd64: ghcr.io/aatrubilin/hassio-torrserver:1.0.0-MatriX.132-alpha1
+  i386: ghcr.io/aatrubilin/hassio-torrserver:1.0.0-MatriX.132-alpha1
+  aarch64: ghcr.io/aatrubilin/hassio-torrserver:1.0.0-MatriX.132-alpha1

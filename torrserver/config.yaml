@@ -1,6 +1,6 @@
 ---
 name: TorrServer
-version: 1.0.0-MatriX.132-alpha1
+version: 1.0.0-MatriX.132-alpha2
 slug: torrserver
 description: TorrServer for home assistant
 url: https://github.com/aatrubilin/hassio-torrserver
