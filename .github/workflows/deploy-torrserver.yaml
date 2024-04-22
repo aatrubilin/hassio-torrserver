@@ -125,7 +125,7 @@ jobs:
           platforms: ${{ steps.flags.outputs.platform }}
           push: true
           tags: |
-            ghcr.io/${{ needs.prepare.outputs.REPO }}:${{ needs.prepare.outputs.VERSION }}-${{ matrix.architecture }}
+            ghcr.io/${{ needs.prepare.outputs.REPO }}-${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}
       # This ugly bit is necessary, or our cache will grow forever...
       # Well until we hit GitHub's limit of 5GB :)
       # https://github.com/docker/build-push-action/issues/252
