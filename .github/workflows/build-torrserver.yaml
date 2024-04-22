@@ -18,11 +18,11 @@ jobs:
         working-directory: ./torrserver
         run: |
           VERSION=$(grep '^version: \w' config.yaml | sed 's/^.*: //')
-          echo "Version: ${VERSION}"
-          echo "VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
-          echo "VERSION_ADDON=$(echo $VERSION | cut -d "-" -f 1)" >> "$GITHUB_OUTPUT"
-          echo "VERSION_TS=$(echo $VERSION | cut -d "-" -f 2)" >> "$GITHUB_OUTPUT"
-          echo "VERSION_META=$(echo $VERSION | cut -d "-" -f 3)" >> "$GITHUB_OUTPUT"
+          echo "VERSION=${VERSION}" >> ${GITHUB_ENV}
+          echo "VERSION_ADDON=$(echo $VERSION | cut -d "-" -f 1)" >> ${GITHUB_ENV}
+          echo "VERSION_TS=$(echo $VERSION | cut -d "-" -f 2)" >> ${GITHUB_ENV}
+          echo "VERSION_META=$(echo $VERSION | cut -d "-" -f 3)" >> ${GITHUB_ENV}
+          echo "Version: ADDON=${VERSION}, TS=${VERSION_TS}, META=${VERSION_META}"
 
       - name: Prepare source
         working-directory: ./torrserver/.build
