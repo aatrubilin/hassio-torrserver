@@ -12,10 +12,6 @@ if [ ! -d $TS_TORR_DIR ]; then
   mkdir -p $TS_TORR_DIR
 fi
 
-if [ ! -f $TS_LOG_PATH ]; then
-  touch $TS_LOG_PATH
-fi
-
 export GODEBUG="madvdontneed=1"
 
 FLAGS="--path $TS_CONF_PATH --torrentsdir $TS_TORR_DIR --port $TS_PORT"
