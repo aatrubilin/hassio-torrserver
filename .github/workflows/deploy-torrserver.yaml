@@ -8,17 +8,6 @@ on: [push, pull_request]
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    outputs:
-      architectures: ${{ steps.information.outputs.architectures }}
-      base_image_signer: ${{ steps.information.outputs.codenotary_base_image }}
-      build: ${{ steps.information.outputs.build }}
-      description: ${{ steps.information.outputs.description }}
-      environment: ${{ steps.release.outputs.environment }}
-      name: ${{ steps.information.outputs.name }}
-      signer: ${{ steps.information.outputs.codenotary_signer }}
-      slug: ${{ steps.override.outputs.slug }}
-      target: ${{ steps.information.outputs.target }}
-      version: ${{ steps.release.outputs.version }}
     steps:
       - name: ⤵️ Checkout
         uses: actions/checkout@v3.3.0
@@ -35,37 +24,6 @@ jobs:
           echo "Version: ${VERSION}"
           echo "Repo: ${GITHUB_REPOSITORY}"
 
-      - name: 🚀 Run add-on information action
-        id: information
-        uses: frenck/action-addon-information@v1.4.2
-
-      - name: 🚀 Process possible slug override
-        id: override
-        run: |
-          slug="${{ steps.information.outputs.slug }}"
-          if [[ ! -z "${{ inputs.slug }}" ]]; then
-            slug="${{ inputs.slug }}"
-          fi
-          echo "slug=$slug" >> "$GITHUB_OUTPUT"
-
-      - name: ℹ️ Gather version and environment
-        id: release
-        run: |
-          sha="${{ github.sha }}"
-          environment="edge"
-          version="${sha:0:7}"
-          if [[ "${{ github.event_name }}" = "release" ]]; then
-            version="${{ github.event.release.tag_name }}"
-            version="${version,,}"
-            version="${version#v}"
-            environment="stable"
-            if [[ "${{ github.event.release.prerelease }}" = "true" ]]; then
-              environment="beta"
-            fi
-          fi
-
-          echo "environment=${environment}" >> "$GITHUB_OUTPUT"
-          echo "version=${version}" >> "$GITHUB_OUTPUT"
       - name: 🏗 Prepare source
         working-directory: ./torrserver/.build
         run: |
@@ -88,7 +46,12 @@ jobs:
       - prepare
     strategy:
       matrix:
-        architecture: ${{ fromJson(needs.information.outputs.architectures) }}
+        arch:
+          - amd64
+          - i386
+          - armhf
+          - armv7
+          - aarch64
     steps:
       - name: ⤵️ Checkout
         uses: actions/checkout@v3.3.0
@@ -144,7 +107,6 @@ jobs:
       - name: 🚀 Build and push
         uses: docker/build-push-action@v3.3.0
         with:
-          load: true
           context: ./torrserver/.build
           cache-from: |
             type=local,src=/tmp/.docker-cache
@@ -153,16 +115,7 @@ jobs:
           platforms: ${{ steps.flags.outputs.platform }}
           push: true
           tags: |
-            ghcr.io/${{ env.REPO }}:${{ env.VERSION }}-${{ steps.flags.outputs.platform }}
-          build-args: |
-            BUILD_ARCH=${{ matrix.architecture }}
-            BUILD_DATE=${{ steps.flags.outputs.date }}
-            BUILD_DESCRIPTION=${{ needs.information.outputs.description }}
-            BUILD_FROM=${{ steps.flags.outputs.from }}
-            BUILD_NAME=${{ needs.information.outputs.name }}
-            BUILD_REF=${{ github.sha }}
-            BUILD_REPOSITORY=${{ github.repository }}
-            BUILD_VERSION=${{ needs.information.outputs.version }}
+            ghcr.io/${{ env.REPO }}:${{ env.VERSION }}-${{ matrix.architecture }}
       # This ugly bit is necessary, or our cache will grow forever...
       # Well until we hit GitHub's limit of 5GB :)
       # https://github.com/docker/build-push-action/issues/252
