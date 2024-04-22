@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       VERSION: ${{ steps.prep.outputs.VERSION }}
-      VERSION_ADDON: ${{ steps.prep.outputs.VERSION }}
-      VERSION_TS: ${{ steps.prep.outputs.VERSION }}
-      VERSION_META: ${{ steps.prep.outputs.VERSION }}
-      REPO: ${{ steps.prep.outputs.VERSION }}
+      VERSION_ADDON: ${{ steps.prep.outputs.VERSION_ADDON }}
+      VERSION_TS: ${{ steps.prep.outputs.VERSION_TS }}
+      VERSION_META: ${{ steps.prep.outputs.VERSION_META }}
+      REPO: ${{ steps.prep.outputs.REPO }}
     steps:
       - name: ⤵️ Checkout
         uses: actions/checkout@v3.3.0
