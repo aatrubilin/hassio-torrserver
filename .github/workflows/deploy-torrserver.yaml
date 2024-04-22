@@ -8,21 +8,32 @@ on: [push, pull_request]
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    outputs:
+      VERSION: ${{ steps.prep.outputs.VERSION }}
+      VERSION_ADDON: ${{ steps.prep.outputs.VERSION }}
+      VERSION_TS: ${{ steps.prep.outputs.VERSION }}
+      VERSION_META: ${{ steps.prep.outputs.VERSION }}
+      REPO: ${{ steps.prep.outputs.VERSION }}
     steps:
       - name: ⤵️ Checkout
         uses: actions/checkout@v3.3.0
 
       - name: 🏗 Prepare envs
+        id: prep
         working-directory: ./torrserver
         run: |
           VERSION=$(grep '^version: \w' config.yaml | sed 's/^.*: //')
-          echo "VERSION=${VERSION}" >> ${GITHUB_ENV}
-          echo "VERSION_ADDON=$(echo $VERSION | cut -d "-" -f 1)" >> ${GITHUB_ENV}
-          echo "VERSION_TS=$(echo $VERSION | cut -d "-" -f 2)" >> ${GITHUB_ENV}
-          echo "VERSION_META=$(echo $VERSION | cut -d "-" -f 3)" >> ${GITHUB_ENV}
-          echo "REPO=${GITHUB_REPOSITORY}" >> ${GITHUB_ENV}
+          VERSION_ADDON=$(echo $VERSION | cut -d "-" -f 1)
+          VERSION_TS=$(echo $VERSION | cut -d "-" -f 2)
+          VERSION_META=$(echo $VERSION | cut -d "-" -f 3)
+          REPO=${GITHUB_REPOSITORY}
           echo "Version: ${VERSION}"
-          echo "Repo: ${GITHUB_REPOSITORY}"
+          echo "Repo: ${REPO}"
+          echo "VERSION=VERSION" >> "$GITHUB_OUTPUT"
+          echo "VERSION_ADDON=VERSION_ADDON" >> "$GITHUB_OUTPUT"
+          echo "VERSION_TS=VERSION_TS" >> "$GITHUB_OUTPUT"
+          echo "VERSION_META=VERSION_META" >> "$GITHUB_OUTPUT"
+          echo "REPO=REPO" >> "$GITHUB_OUTPUT"
 
       - name: 🏗 Prepare source
         working-directory: ./torrserver/.build
@@ -42,8 +53,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs:
-      - prepare
+    needs: prepare
     strategy:
       matrix:
         architecture:
@@ -109,12 +119,12 @@ jobs:
           context: ./torrserver/.build
           cache-from: |
             type=local,src=/tmp/.docker-cache
-            ghcr.io/${{ jobs.prepare.env.REPO }}:latest
+            ghcr.io/${{ needs.prepare.outputs.REPO }}:latest
           cache-to: type=local,mode=max,dest=/tmp/.docker-cache-new
           platforms: ${{ steps.flags.outputs.platform }}
           push: true
           tags: |
-            ghcr.io/${{ jobs.prepare.env.REPO }}:${{ jobs.prepare.env.VERSION }}-${{ matrix.architecture }}
+            ghcr.io/${{ needs.prepare.outputs.REPO }}:${{ needs.prepare.outputs.VERSION }}-${{ matrix.architecture }}
       # This ugly bit is necessary, or our cache will grow forever...
       # Well until we hit GitHub's limit of 5GB :)
       # https://github.com/docker/build-push-action/issues/252
