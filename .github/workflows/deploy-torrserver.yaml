@@ -39,8 +39,8 @@ jobs:
         working-directory: ./torrserver/.build
         run: |
           rm -rf src
-          echo "Clone TorrServer-${VERSION_TS}"
-          git clone --depth 1 --branch $VERSION_TS https://github.com/YouROK/TorrServer.git src
+          echo "Clone TorrServer-${{ steps.prep.outputs.VERSION_TS }}"
+          git clone --depth 1 --branch ${{ steps.prep.outputs.VERSION_TS }} https://github.com/YouROK/TorrServer.git src
           echo "Set relative path for staticfiles"
           jq -c '. + { "homepage": "./" }' ./src/web/package.json --indent 2 > ./src/web/package.$$.json
           mv ./src/web/package.$$.json ./src/web/package.json
