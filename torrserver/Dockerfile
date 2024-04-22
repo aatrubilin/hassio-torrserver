@@ -1,10 +1,9 @@
 ARG BUILD_FROM
-ARG BUILD_ARCH
-ARG TS_VERSION
 
 FROM $BUILD_FROM
 
 # Build arguments
+ARG BUILD_FROM
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
@@ -39,13 +38,10 @@ ENV TS_LOG_PATH="/config/log"
 ENV TS_TORR_DIR="/config/torrents"
 ENV TS_PORT=8090
 ENV BUILD_ARCH=$BUILD_ARCH
-
-# Install deps
-RUN apk add --no-cache coreutils=9.4-r2 wget=1.21.4-r0 ffmpeg
+ENV BUILD_FROM=$BUILD_FROM
 
 # Copy files
-COPY ./.build/run.sh /run.sh
-COPY ./TS_VERSION /TS_VERSION
+COPY ./rootfs /
 
 # Add execution permissions
 RUN chmod a+x /run.sh

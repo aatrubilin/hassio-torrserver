@@ -1,4 +1,7 @@
 #!/usr/bin/with-contenv bashio
+
+echo "Built from ${BUILD_FROM}"
+
 set -euo pipefail
 
 if [ ! -d $TS_CONF_PATH ]; then
