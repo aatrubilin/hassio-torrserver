@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-echo "Base image: ${BUILD_FROM}"
+echo "Build version: ${VERSION}"
 
 set -euo pipefail
 

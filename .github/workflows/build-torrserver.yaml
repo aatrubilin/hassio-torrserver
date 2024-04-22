@@ -1,9 +1,10 @@
 ---
 name: build-torrserver
 
-on:
-  release:
-    types: [published]
+on: [push, pull_request]
+#on:
+#  release:
+#    types: [published]
 
 jobs:
   build-push:
@@ -56,3 +57,5 @@ jobs:
           tags: |
             ghcr.io/${{ env.REPO }}:${{ env.VERSION }}
             ghcr.io/${{ env.REPO }}:latest
+          build-args: |
+            VERSION: ${{ env.VERSION }}
