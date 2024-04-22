@@ -17,9 +17,6 @@ map:
   - addon_config:rw
 options:
   arch: auto
-schema:
-  debug: bool
-  arch: list(auto|armv7|armhf|amd64|i386|aarch64)
 ingress: true
 ingress_port: 8090
 ports:
