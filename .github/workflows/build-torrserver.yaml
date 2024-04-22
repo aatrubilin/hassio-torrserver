@@ -52,10 +52,10 @@ jobs:
         uses: docker/build-push-action@v3.3.0
         with:
           context: ./torrserver/.build
+          cache-from: |
+            ghcr.io/${{ env.REPO }}:latest
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           tags: |
             ghcr.io/${{ env.REPO }}:${{ env.VERSION }}
             ghcr.io/${{ env.REPO }}:latest
-          build-args: |
-            VERSION: ${{ env.VERSION }}

@@ -1,8 +1,6 @@
 #!/usr/bin/with-contenv bashio
 set -euo pipefail
 
-echo "Build version: ${VERSION}"
-
 if [ ! -d $TS_CONF_PATH ]; then
   mkdir -p $TS_CONF_PATH
 fi
