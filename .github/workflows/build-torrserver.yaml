@@ -22,7 +22,9 @@ jobs:
           echo "VERSION_ADDON=$(echo $VERSION | cut -d "-" -f 1)" >> ${GITHUB_ENV}
           echo "VERSION_TS=$(echo $VERSION | cut -d "-" -f 2)" >> ${GITHUB_ENV}
           echo "VERSION_META=$(echo $VERSION | cut -d "-" -f 3)" >> ${GITHUB_ENV}
+          echo "REPO=${GITHUB_REPOSITORY}" >> ${GITHUB_ENV}
           echo "Version: ${VERSION}"
+          echo "Repo: ${GITHUB_REPOSITORY}"
 
       - name: Prepare source
         working-directory: ./torrserver/.build
