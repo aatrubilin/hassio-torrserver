@@ -2,6 +2,8 @@
 
 This is a TorrServer for Home Assistant.
 
+![assets/screenshot.jpg](assets/screenshot.jpg)
+
 This project based on [https://github.com/YouROK/TorrServer](https://github.com/YouROK/TorrServer)
 
 ## Installation
@@ -10,7 +12,10 @@ This project based on [https://github.com/YouROK/TorrServer](https://github.com/
    <kbd>Settings</kbd> -> <kbd>Add-ons</kbd> -> <kbd>Add-on Store (Bottom Right)</kbd>.
 
 2. Click the 3-dots menu at upper right <kbd>...</kbd> > <kbd>Repositories</kbd>
-   and add this repository's URL: [https://github.com/aatrubilin/hassio-torrserver](https://github.com/aatrubilin/hassio-torrserver)
+   and add this repository's URL:
+   ```shell
+   https://github.com/aatrubilin/hassio-torrserver
+   ```
 
 3. Reload the page, scroll to the bottom to find the new repository,
    and click the new add-on named "TorrServer" (refresh the cache if it doesn't appear)
@@ -32,6 +37,8 @@ The original TorrServer is developed by [@YouROK](https://github.com/YouROK).
 For more information please visit this page: [YouROK/TorrServer](https://github.com/YouROK/TorrServer)
 
 The hassio addon is brought to you by [@aatrubilin](https://github.com/aatrubilin).
+
+[<img src="assets/bmc-button.svg" width=150 height=40 style="margin: 5px"/>](https://www.tinkoff.ru/cf/4XGa2r5t6OW)
 
 ## License
 
