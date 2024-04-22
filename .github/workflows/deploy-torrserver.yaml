@@ -29,10 +29,10 @@ jobs:
           REPO=${GITHUB_REPOSITORY}
           echo "Version: ${VERSION}"
           echo "Repo: ${REPO}"
-          echo "VERSION=VERSION" >> "$GITHUB_OUTPUT"
-          echo "VERSION_ADDON=VERSION_ADDON" >> "$GITHUB_OUTPUT"
-          echo "VERSION_TS=VERSION_TS" >> "$GITHUB_OUTPUT"
-          echo "VERSION_META=VERSION_META" >> "$GITHUB_OUTPUT"
+          echo "VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "VERSION_ADDON=${VERSION_ADDON}" >> "$GITHUB_OUTPUT"
+          echo "VERSION_TS=${VERSION_TS}" >> "$GITHUB_OUTPUT"
+          echo "VERSION_META=${VERSION_META}" >> "$GITHUB_OUTPUT"
           echo "REPO=REPO" >> "$GITHUB_OUTPUT"
 
       - name: 🏗 Prepare source
