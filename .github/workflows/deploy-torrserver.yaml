@@ -46,12 +46,7 @@ jobs:
       - prepare
     strategy:
       matrix:
-        arch:
-          - amd64
-          - i386
-          - armhf
-          - armv7
-          - aarch64
+        arch: [amd64, i386, armhf, armv7, aarch64]
     steps:
       - name: ⤵️ Checkout
         uses: actions/checkout@v3.3.0
