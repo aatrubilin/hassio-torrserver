@@ -22,7 +22,7 @@ jobs:
           echo "VERSION_ADDON=$(echo $VERSION | cut -d "-" -f 1)" >> ${GITHUB_ENV}
           echo "VERSION_TS=$(echo $VERSION | cut -d "-" -f 2)" >> ${GITHUB_ENV}
           echo "VERSION_META=$(echo $VERSION | cut -d "-" -f 3)" >> ${GITHUB_ENV}
-          echo "Version: ADDON=${VERSION}, TS=${VERSION_TS}, META=${VERSION_META}"
+          echo "Version: ${VERSION}"
 
       - name: Prepare source
         working-directory: ./torrserver/.build
@@ -33,21 +33,6 @@ jobs:
           echo "Set relative path for staticfiles"
           jq -c '. + { "homepage": "./" }' ./src/web/package.json --indent 2 > ./src/web/package.$$.json
           mv ./src/web/package.$$.json ./src/web/package.json
-#
-#      - name: Set Node.js 16.x
-#        uses: actions/setup-node@v4
-#        with:
-#          node-version: 16.x
-#          cache: yarn
-#          cache-dependency-path: ./torrserver/.build/TorrServer/web/package.json
-#
-#      - name: Build frontend
-#        env:
-#          REACT_APP_SERVER_HOST: "."  # Relative path for api endpoints
-#        working-directory: ./torrserver/.build/TorrServer/web
-#        run: |
-#          yarn install
-#          yarn run build
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2.1.0
@@ -69,5 +54,5 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ env.GITHUB_REPOSITORY }}:${{ env.VERSION }}
-            ghcr.io/${{ env.GITHUB_REPOSITORY }}:latest
+            ghcr.io/${{ env.REPO }}:${{ env.VERSION }}
+            ghcr.io/${{ env.REPO }}:latest
