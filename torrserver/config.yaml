@@ -3,7 +3,7 @@ name: TorrServer
 slug: torrserver
 description: TorrServer for home assistant
 image: ghcr.io/aatrubilin/hassio-torrserver/{arch}
-version: 1.0.0-MatriX.132-rc10
+version: 1.0.0-MatriX.132-rc11
 url: https://github.com/aatrubilin/hassio-torrserver
 codenotary: aatrubilin@gmail.com
 init: false
@@ -31,5 +31,5 @@ ingress_port: 8090
 ports:
   8090/tcp: 8090
 ports_description:
-  8090/tcp: TorrServer Web
+  8090/tcp: TorrServer port
 startup: system

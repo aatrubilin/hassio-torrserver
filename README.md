@@ -30,6 +30,13 @@ Got questions or problems?
 
 You can [open an issue here](https://github.com/aatrubilin/hassio-torrserver/issues) GitHub.
 
+> Please keep in mind, that this addon is tested with architectures:
+> - [+] amd64
+> - [ ] i386
+> - [ ] armhf
+> - [ ] armv7
+> - [+] aarch64
+
 ## Authors & contributors
 
 The original TorrServer is developed by [@YouROK](https://github.com/YouROK).

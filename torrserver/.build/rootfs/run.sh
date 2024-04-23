@@ -1,9 +1,15 @@
 #!/usr/bin/with-contenv bashio
 set -euo pipefail
 
-ACCS_DB="$(bashio::config 'accs.db')"
+HTTPAUTH="$(bashio::config 'httpauth')"
+bashio::log.info "HTTPAUTH: ${HTTPAUTH}"
 
-echo "ACCS_DB: ${ACCS_DB}"
+# Init http creds
+for key in $(bashio::config "accs.db|keys"); do
+    USERNAME=$(bashio::config "accs.db[${key}].username")
+    PASSWORD=$(bashio::config "accs.db[${key}].password")
+    echo "${USERNAME}:${PASSWORD}"
+done
 
 if [ ! -d $TS_CONF_PATH ]; then
   mkdir -p $TS_CONF_PATH
@@ -17,6 +23,7 @@ export GODEBUG="madvdontneed=1"
 
 FLAGS="--path $TS_CONF_PATH --torrentsdir $TS_TORR_DIR --port $TS_PORT"
 
-echo "Starting torrserver ${FLAGS}"
+bashio::log.info "Starting torrserver..."
+bashio::log.info "torrserver ${FLAGS}"
 
 torrserver $FLAGS
