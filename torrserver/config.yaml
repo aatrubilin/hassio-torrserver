@@ -3,7 +3,7 @@ name: TorrServer
 slug: torrserver
 description: TorrServer for home assistant
 image: ghcr.io/aatrubilin/hassio-torrserver/{arch}
-version: 1.0.0-MatriX.132-rc8
+version: 1.0.0-MatriX.132-rc9
 url: https://github.com/aatrubilin/hassio-torrserver
 codenotary: aatrubilin@gmail.com
 init: false
@@ -18,12 +18,12 @@ map:
   - addon_config:rw
 options:
   httpauth: false
-  accs:
+  accs.db:
     - username: homeassistant
       password: null
 schema:
   httpauth: bool
-  accs:
+  accs.db:
     - username: str
     - password: password
 ingress: true

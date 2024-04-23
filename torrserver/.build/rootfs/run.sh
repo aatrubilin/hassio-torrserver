@@ -1,9 +1,9 @@
 #!/usr/bin/with-contenv bashio
 set -euo pipefail
 
-accs="$(bashio::config 'debug')"
+accs="$(bashio::config 'accs')"
 
-echo: f"accs: ${accs}"
+echo "accs: ${accs}"
 
 if [ ! -d $TS_CONF_PATH ]; then
   mkdir -p $TS_CONF_PATH
