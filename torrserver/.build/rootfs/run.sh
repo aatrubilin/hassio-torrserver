@@ -12,7 +12,7 @@ if [ ! -d $TS_TORR_DIR ]; then
 fi
 
 # Build accs.db if httpauth enabled
-if [[ "$(bashio::config 'httpauth')" = false ]]
+if [[ "$(bashio::config 'httpauth')" = true ]]
 then
   bashio::log.info "HTTPAuth: enabled"
   ACCESS_DB="${TS_CONF_PATH}/accs.db"
@@ -22,7 +22,8 @@ then
     PASSWORD=$(bashio::config "logins[${key}].password")
 
     # Validate if username & password are not empty
-    if [ -z "${USERNAME}" ] || [ -z "${PASSWORD}" ]
+    if bashio::config.is_empty "logins[${key}].username" || \
+      bashio::config.is_empty "logins[${key}].password"
     then
       bashio::log.fatal
       bashio::log.fatal 'Configuration of logins is incomplete.'
@@ -37,7 +38,7 @@ then
     fi
 
     # Warning if password is not safe
-    if bashio::config.is_safe_password "${PASSWORD}"; then
+    if ! bashio::config.is_safe_password "${PASSWORD}"; then
       bashio::log.warning "Password for user '${USERNAME}' is not safe!"
     fi
 

@@ -4,8 +4,8 @@
 
 ### ✨ New features
 
-- Added ingress feature for the add-on [#7](https://github.com/aatrubilin/hassio-torrserver/issues/7)
-- Added optional basic authentication [#17](https://github.com/aatrubilin/hassio-torrserver/issues/17)
+- Added ingress feature for the add-on ([#7](https://github.com/aatrubilin/hassio-torrserver/issues/7))
+- Added optional basic authentication ([#17](https://github.com/aatrubilin/hassio-torrserver/issues/17))
 
 ### 🧰 Maintenance
 

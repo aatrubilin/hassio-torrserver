@@ -125,6 +125,7 @@ jobs:
           platforms: ${{ steps.flags.outputs.platform }}
           tags: |
             ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}
+            ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:latest
           build-args: |
             BUILD_ARCH=${{ matrix.architecture }}
       # This ugly bit is necessary, or our cache will grow forever...
@@ -140,3 +141,4 @@ jobs:
         # yamllint disable rule:line-length
         run: |
           docker push "ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}"
+          docker push "ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:latest
