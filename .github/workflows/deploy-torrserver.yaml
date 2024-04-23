@@ -18,7 +18,7 @@ jobs:
       - name: ⤵️ Checkout
         uses: actions/checkout@v3.3.0
 
-      - name: 🏗 Prepare envs
+      - name: 🛠 Prepare envs
         id: prep
         working-directory: ./torrserver
         run: |
@@ -92,7 +92,7 @@ jobs:
           name: src
           path: ./torrserver/.build
 
-      - name: 📝 Set up build cache
+      - name: 📦 Set up build cache
         id: cache
         uses: actions/cache@v4.0.2
         with:
@@ -101,7 +101,7 @@ jobs:
           restore-keys: |
             docker-${{ matrix.architecture }}
 
-      - name: 🏗 Set up QEMU
+      - name: 📟 Set up QEMU
         uses: docker/setup-qemu-action@v3.0.0
 
       - name: 🚢 Set up Docker Buildx
@@ -114,13 +114,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🚀 Build
+      - name: 🏗 Build
         uses: docker/build-push-action@v5.3.0
         with:
+          load: true
           context: ./torrserver/.build
           cache-from: |
             type=local,src=/tmp/.docker-cache
-            ghcr.io/${{ needs.prepare.outputs.REPO }}:latest
           cache-to: type=local,mode=max,dest=/tmp/.docker-cache-new
           platforms: ${{ steps.flags.outputs.platform }}
           tags: |
