@@ -1,0 +1,10 @@
+---
+configuration:
+  httpauth:
+    name: HTTP Auth
+    description: Enable/disable basic access authentication.
+  logins:
+    name: Logins
+    description: This section defines a http auth user definition.
+network:
+  8090/tcp: The port to access TorrServer.
