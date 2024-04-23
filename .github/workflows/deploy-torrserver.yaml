@@ -80,7 +80,7 @@ jobs:
           elif [[ "${{ matrix.architecture }}" = "armv7" ]]; then
             echo "platform=linux/arm/v7" >> "$GITHUB_OUTPUT"
           elif [[ "${{ matrix.architecture }}" = "aarch64" ]]; then
-            echo "platform=linux/arm64/v8" >> "$GITHUB_OUTPUT"
+            echo "platform=linux/arm64" >> "$GITHUB_OUTPUT"
           else
             echo "::error ::Could not determine platform for architecture ${{ matrix.architecture }}"
             exit 1
@@ -123,7 +123,6 @@ jobs:
             ghcr.io/${{ needs.prepare.outputs.REPO }}:latest
           cache-to: type=local,mode=max,dest=/tmp/.docker-cache-new
           platforms: ${{ steps.flags.outputs.platform }}
-          push: true
           tags: |
             ghcr.io/${{ needs.prepare.outputs.REPO }}-${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}
       # This ugly bit is necessary, or our cache will grow forever...
@@ -134,3 +133,7 @@ jobs:
         run: |
           rm -rf /tmp/.docker-cache
           mv /tmp/.docker-cache-new /tmp/.docker-cache
+      - name: 🚀 Push
+        # yamllint disable rule:line-length
+        run: |
+          docker push "ghcr.io/${{ needs.prepare.outputs.REPO }}-${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}"
