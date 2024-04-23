@@ -30,12 +30,12 @@ Got questions or problems?
 
 You can [open an issue here](https://github.com/aatrubilin/hassio-torrserver/issues) GitHub.
 
-> Please keep in mind, that this addon is tested with architectures:
-> - [+] amd64
+> Please keep in mind, that this addon is tested only with:
+> - [x] amd64
 > - [ ] i386
 > - [ ] armhf
 > - [ ] armv7
-> - [+] aarch64
+> - [x] aarch64
 
 ## Authors & contributors
 
