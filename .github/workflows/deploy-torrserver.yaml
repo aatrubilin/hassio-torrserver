@@ -125,6 +125,10 @@ jobs:
           platforms: ${{ steps.flags.outputs.platform }}
           tags: |
             ghcr.io/${{ needs.prepare.outputs.REPO }}-${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}
+      - name: 🚀 Push
+        # yamllint disable rule:line-length
+        run: |
+          docker push "ghcr.io/${{ needs.prepare.outputs.REPO }}-${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}"
       # This ugly bit is necessary, or our cache will grow forever...
       # Well until we hit GitHub's limit of 5GB :)
       # https://github.com/docker/build-push-action/issues/252
@@ -133,7 +137,3 @@ jobs:
         run: |
           rm -rf /tmp/.docker-cache
           mv /tmp/.docker-cache-new /tmp/.docker-cache
-      - name: 🚀 Push
-        # yamllint disable rule:line-length
-        run: |
-          docker push "ghcr.io/${{ needs.prepare.outputs.REPO }}-${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}"
