@@ -1,5 +1,5 @@
 # Based on https://github.com/YouROK/TorrServer/blob/master/Dockerfile
-ARG BUILD_FROM
+ARG BUILD_ARCH
 
 ### FRONT BUILD START ###
 FROM --platform=$BUILDPLATFORM node:16-alpine as front
@@ -46,7 +46,7 @@ RUN upx --best --lzma ./torrserver
 
 
 ### BUILD MAIN IMAGE START ###
-FROM ghcr.io/hassio-addons/base/$BUILD_FROM:15.0.8
+FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:15.0.8
 RUN apk add --no-cache --update ffmpeg
 
 # Environment variables
