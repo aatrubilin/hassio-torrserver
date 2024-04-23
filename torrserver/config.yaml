@@ -17,11 +17,15 @@ arch:
 map:
   - addon_config:rw
 options:
-  accs: []
+  httpauth: false
+  accs:
+    - username: homeassistant
+      password: null
 schema:
+  httpauth: bool
   accs:
     username: str
-    password: str
+    password: password
 ingress: true
 ingress_port: 8090
 ports:
