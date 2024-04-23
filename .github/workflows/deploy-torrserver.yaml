@@ -1,8 +1,9 @@
 ---
 name: build-torrserver
 
-on: [push, pull_request]
-
+on:
+  release:
+    types: [published]
 jobs:
   prepare:
     runs-on: ubuntu-latest
