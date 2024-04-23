@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0-MatriX.132-rc3 [2024-04-22]
+## 1.0.0-MatriX.132-rc3 [2024-04-23]
 
 ### ✨ New features
 

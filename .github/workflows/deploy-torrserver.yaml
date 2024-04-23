@@ -141,4 +141,4 @@ jobs:
         # yamllint disable rule:line-length
         run: |
           docker push "ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}"
-          docker push "ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:latest
+          docker push "ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:latest"
