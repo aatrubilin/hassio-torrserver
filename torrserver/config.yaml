@@ -24,8 +24,8 @@ options:
 schema:
   httpauth: bool
   accs:
-    username: str
-    password: password
+    - username: str
+    - password: password
 ingress: true
 ingress_port: 8090
 ports:
