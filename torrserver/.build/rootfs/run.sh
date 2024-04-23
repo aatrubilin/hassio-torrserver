@@ -24,22 +24,6 @@ then
     USERNAME=$(bashio::config "logins[${key}].username")
     PASSWORD=$(bashio::config "logins[${key}].password")
 
-    # Validate if username & password are not empty
-    if bashio::config.is_empty "logins[${key}].username" || \
-       bashio::config.is_empty "logins[${key}].password"
-    then
-      bashio::log.fatal
-      bashio::log.fatal 'Configuration of HTTP Auth is incomplete.'
-      bashio::log.fatal
-      bashio::log.fatal "username[${key}]: '${USERNAME}'"
-      bashio::log.fatal "password[${key}]: '${PASSWORD}'"
-      bashio::log.fatal
-      bashio::log.fatal 'Please be sure to set not empty'
-      bashio::log.fatal 'username and password for http auth!'
-      bashio::log.fatal
-      bashio::exit.nok
-    fi
-
     # Warning if password is not safe
     if ! bashio::config.is_safe_password "${PASSWORD}"; then
       bashio::log.warning "Password for user '${USERNAME}' is not safe!"

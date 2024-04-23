@@ -20,7 +20,7 @@ options:
   httpauth: false
   logins:
     - username: homeassistant
-      password: null
+      password: homeassistant
 schema:
   httpauth: bool
   logins:
