@@ -2,7 +2,7 @@
 ARG BUILD_ARCH
 
 ### FRONT BUILD START ###
-FROM --platform=$BUILDPLATFORM node:16-alpine as front
+FROM --platform=$BUILDPLATFORM node:20-alpine as front
 COPY ./src/web /app
 WORKDIR /app
 
