@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile ADDON_SLUG flags=(attach_disconnected,mediate_deleted) {
+profile torrserver flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   # Capabilities
@@ -29,22 +29,22 @@ profile ADDON_SLUG flags=(attach_disconnected,mediate_deleted) {
   /data/** rw,
 
   # Start new profile for service
-  /usr/bin/myprogram cx -> myprogram,
+  /usr/bin/torrserver cx -> torrserver,
 
-  profile myprogram flags=(attach_disconnected,mediate_deleted) {
+  profile torrserver flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/base>
 
     # Receive signals from S6-Overlay
-    signal (receive) peer=*_ADDON_SLUG,
+    signal (receive) peer=*_torrserver,
 
     # Access to options.json and other files within your addon
     /data/** rw,
 
     # Access to mapped volumes specified in config.json
-    /share/** rw,
+    /config/** rw,
 
     # Access required for service functionality
-    /usr/bin/myprogram r,
+    /usr/bin/torrserver r,
     /bin/bash rix,
     /bin/echo ix,
     /etc/passwd r,
