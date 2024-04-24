@@ -2,5 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["/config.yaml$"],
+      "matchStrings": ["version: ([0-9.]+)-(?<currentValue>.*?)\\n"],
+      "depNameTemplate": "YouROK/TorrServer",
+      "datasourceTemplate": "github-releases"
+    }
   ]
 }
