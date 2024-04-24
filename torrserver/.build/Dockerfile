@@ -15,7 +15,7 @@ RUN yarn install && yarn run build
 
 
 ### BUILD TORRSERVER MULTIARCH START ###
-FROM --platform=$BUILDPLATFORM golang:1.21.2-alpine as builder
+FROM --platform=$BUILDPLATFORM golang:1.22.2-alpine as builder
 
 RUN apk add --update g++
 
