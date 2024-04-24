@@ -10,6 +10,13 @@
       "matchStrings": ["version: ([0-9.]+)-(?<currentValue>.*?)\\n"],
       "depNameTemplate": "YouROK/TorrServer",
       "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["/Dockerfile$"],
+      "matchStrings": ["FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:(?<currentValue>.*?)\\n"],
+      "depNameTemplate": "ghcr.io/hassio-addons/base",
+      "datasourceTemplate": "docker"
     }
   ]
 }
