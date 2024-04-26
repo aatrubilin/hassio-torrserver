@@ -8,6 +8,8 @@ WORKDIR /app
 
 # Relative path for api endpoints
 ENV REACT_APP_SERVER_HOST="."
+# For build with new node version
+ENV NODE_OPTIONS="--openssl-legacy-provider"
 
 # Build front once upon multiarch build
 RUN yarn install && yarn run build
