@@ -1,5 +1,5 @@
 ---
-name: build-torrserver
+name: deploy
 
 on:
   workflow_dispatch: {}
