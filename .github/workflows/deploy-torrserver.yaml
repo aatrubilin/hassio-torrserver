@@ -2,6 +2,7 @@
 name: build-torrserver
 
 on:
+  workflow_dispatch: {}
   release:
     types: [published]
 jobs:
