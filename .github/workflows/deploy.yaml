@@ -16,7 +16,7 @@ jobs:
       REPO: ${{ steps.prep.outputs.REPO }}
     steps:
       - name: ⤵️ Checkout
-        uses: actions/checkout@v4.1.4
+        uses: actions/checkout@v4.1.5
 
       - name: 🛠 Prepare envs
         id: prep
@@ -64,7 +64,7 @@ jobs:
           - aarch64
     steps:
       - name: ⤵️ Checkout
-        uses: actions/checkout@v4.1.4
+        uses: actions/checkout@v4.1.5
 
       - name: ℹ️ Compose build flags
         id: flags
