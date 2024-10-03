@@ -1,7 +1,10 @@
 ---
-name: build-torrserver
+name: deploy
 
-on: [push]
+on:
+  workflow_dispatch: {}
+  release:
+    types: [published]
 jobs:
   prepare:
     runs-on: ubuntu-latest
@@ -13,7 +16,7 @@ jobs:
       REPO: ${{ steps.prep.outputs.REPO }}
     steps:
       - name: ⤵️ Checkout
-        uses: actions/checkout@v4.1.4
+        uses: actions/checkout@v4.1.7
 
       - name: 🛠 Prepare envs
         id: prep
@@ -61,7 +64,7 @@ jobs:
           - aarch64
     steps:
       - name: ⤵️ Checkout
-        uses: actions/checkout@v4.1.4
+        uses: actions/checkout@v4.1.7
 
       - name: ℹ️ Compose build flags
         id: flags
@@ -105,14 +108,14 @@ jobs:
         uses: docker/setup-buildx-action@v3.3.0
 
       - name: 🔑 Login to GitHub Container Registry
-        uses: docker/login-action@v3.1.0
+        uses: docker/login-action@v3.2.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🏗 Build
-        uses: docker/build-push-action@v5.3.0
+        uses: docker/build-push-action@v6.1.0
         with:
           load: true
           context: ./torrserver/.build
@@ -122,6 +125,7 @@ jobs:
           platforms: ${{ steps.flags.outputs.platform }}
           tags: |
             ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}
+            ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:latest
           build-args: |
             BUILD_ARCH=${{ matrix.architecture }}
       # This ugly bit is necessary, or our cache will grow forever...
@@ -137,3 +141,4 @@ jobs:
         # yamllint disable rule:line-length
         run: |
           docker push "ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}"
+          docker push "ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:latest"

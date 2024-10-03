@@ -15,7 +15,7 @@ RUN yarn install && yarn run build
 
 
 ### BUILD TORRSERVER MULTIARCH START ###
-FROM --platform=$BUILDPLATFORM golang:1.22.2-alpine as builder
+FROM --platform=$BUILDPLATFORM golang:1.22.4-alpine as builder
 
 COPY ./src /opt/src
 COPY --from=front /app/build /opt/src/web/build
@@ -45,7 +45,7 @@ RUN upx --best --lzma ./torrserver
 
 
 ### BUILD MAIN IMAGE START ###
-FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:15.0.8
+FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:16.0.1
 
 # RUN apk add --no-cache --update ffmpeg
 
