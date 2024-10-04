@@ -7,8 +7,7 @@ COPY ./src/web /app
 WORKDIR /app
 
 # Environment variables
-ENV REACT_APP_SERVER_HOST="." \
-    NODE_OPTIONS="--openssl-legacy-provider"
+ENV REACT_APP_SERVER_HOST="."
 
 RUN yarn install && yarn run build
 ### FRONT BUILD END ###
