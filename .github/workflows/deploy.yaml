@@ -31,6 +31,8 @@ jobs:
           VERSION_META=$(echo $VERSION | cut -d "-" -f 3)
           REPO=${GITHUB_REPOSITORY}
           echo "Version: ${VERSION}"
+          echo "Version ts: ${VERSION_TS}"
+          echo "Version meta: ${VERSION_META}"
           echo "Repo: ${REPO}"
           echo "VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "VERSION_ADDON=${VERSION_ADDON}" >> "$GITHUB_OUTPUT"
