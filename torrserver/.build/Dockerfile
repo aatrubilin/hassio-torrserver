@@ -2,20 +2,19 @@
 ARG BUILD_ARCH
 
 ### FRONT BUILD START ###
-FROM --platform=$BUILDPLATFORM node:20-alpine as front
+FROM --platform=$BUILDPLATFORM node:16-alpine as front
 COPY ./src/web /app
 WORKDIR /app
 
 # Environment variables
-ENV REACT_APP_SERVER_HOST="." \
-    NODE_OPTIONS="--openssl-legacy-provider"
+ENV REACT_APP_SERVER_HOST="."
 
 RUN yarn install && yarn run build
 ### FRONT BUILD END ###
 
 
 ### BUILD TORRSERVER MULTIARCH START ###
-FROM --platform=$BUILDPLATFORM golang:1.22.4-alpine as builder
+FROM --platform=$BUILDPLATFORM golang:1.21.2-alpine as builder
 
 COPY ./src /opt/src
 COPY --from=front /app/build /opt/src/web/build
@@ -45,7 +44,7 @@ RUN upx --best --lzma ./torrserver
 
 
 ### BUILD MAIN IMAGE START ###
-FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:16.0.1
+FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:16.3.2
 
 # RUN apk add --no-cache --update ffmpeg
 

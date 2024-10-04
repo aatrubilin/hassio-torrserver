@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0-MatriX.134 [2024-10-04]
+
+### ⬆️ Dependency updates
+
+- Updated TorrServer to MatriX.134
+
 ## 1.0.0-MatriX.132 [2024-04-23]
 
 ### ✨ New features
