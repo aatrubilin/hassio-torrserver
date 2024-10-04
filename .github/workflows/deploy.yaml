@@ -55,6 +55,8 @@ jobs:
         with:
           name: src
           path: ./torrserver/.build
+          if-no-files-found: error
+          include-hidden-files: true
 
   deploy:
     runs-on: ubuntu-latest
