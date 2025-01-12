@@ -126,9 +126,9 @@ jobs:
         with:
           load: true
           context: ./torrserver/.build
-#          cache-from: |
-#            type=local,src=/tmp/.docker-cache
-#          cache-to: type=local,mode=max,dest=/tmp/.docker-cache-new
+          cache-from: |
+            type=local,src=/tmp/.docker-cache
+          cache-to: type=local,mode=max,dest=/tmp/.docker-cache-new
           platforms: ${{ steps.flags.outputs.platform }}
           tags: |
             ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:${{ needs.prepare.outputs.VERSION }}

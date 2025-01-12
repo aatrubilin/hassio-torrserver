@@ -27,21 +27,12 @@ ARG TARGETARCH
 ENV GOARCH=$TARGETARCH
 
 ## Build torrserver
-#RUN apk add --update g++ \
-#  && go run gen_web.go \
-#  && cd server \
-#  && go clean -i -r -cache \
-#  && go mod tidy \
-#  && go build -ldflags '-w -s' --o "torrserver" ./cmd
+RUN apk add --update g++ \
+  && go run gen_web.go \
+  && cd server \
+  && go mod tidy \
+  && go build -ldflags '-w -s' --o "torrserver" ./cmd
 #### BUILD TORRSERVER MULTIARCH END ###
-
-# Build torrserver
-RUN apk add --update g++
-RUN go run gen_web.go
-# RUN cd server && go clean -i -r -cache
-RUN cd server && go mod tidy
-RUN cd server && go build -ldflags '-w -s' --o "torrserver" ./cmd
-### BUILD TORRSERVER MULTIARCH END ###
 
 
 ### UPX COMPRESSING START ###
