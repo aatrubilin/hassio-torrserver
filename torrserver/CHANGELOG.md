@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0-MatriX.134 [2024-10-04]
+## 1.0.0-MatriX.134 [2025-01-12]
 
 ### ⬆️ Dependency updates
 
