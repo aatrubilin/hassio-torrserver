@@ -20,7 +20,7 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["golang"],
+      "matchPackageNames": ["golang", "node"],
       "enabled": false
     }
   ]
