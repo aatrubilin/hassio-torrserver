@@ -11,6 +11,8 @@
 ![Supports armv7 Architecture](https://img.shields.io/badge/armv7-more%20likely-blue.svg)
 ![Supports i386 Architecture](https://img.shields.io/badge/i386-unknown-dbdbdc.svg)
 
+_Please keep in mind, that this addon is tested only with **HA OS**_
+
 This is a [TorrServer for Home Assistant](https://github.com/aatrubilin/hassio-torrserver).
 
 🌟 Please consider supporting [this project](https://github.com/aatrubilin/hassio-torrserver) by giving it a star.

@@ -43,7 +43,7 @@ Got questions or problems?
 
 You can [open an issue here](https://github.com/aatrubilin/hassio-torrserver/issues) GitHub.
 
-> Please keep in mind, that this addon is tested only with:
+> Please keep in mind, that this addon is tested only with HA OS on:
 > - [x] amd64
 > - [ ] i386
 > - [ ] armhf

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0-MatriX.134 [2025-01-18]
+
+### ⬆️ Dependency updates
+
+- ⬆️ Update ghcr.io/hassio-addons/base Docker tag to v17.1.0 @renovate (#54)
+
 ## 1.0.0-MatriX.134 [2025-01-12]
 
 ### ⬆️ Dependency updates
