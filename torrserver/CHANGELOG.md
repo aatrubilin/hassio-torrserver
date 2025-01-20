@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0-MatriX.134 [2025-01-20]
+
+### 🚀 Enhancements
+
+- 📺️ Added TMDB API key for uploading posters of added torrents @lemeshovich (#59)
+
 ## 1.1.0-MatriX.134 [2025-01-18]
 
 ### ⬆️ Dependency updates

@@ -9,7 +9,8 @@ WORKDIR /app
 # Environment variables
 ENV REACT_APP_SERVER_HOST="."
 
-RUN yarn install && yarn run build
+RUN --mount=type=secret,id=tmdb_api_key,env=REACT_APP_TMDB_API_KEY \
+    yarn install && yarn run build
 ### FRONT BUILD END ###
 
 
