@@ -48,8 +48,8 @@ jobs:
           git clone --depth 1 --branch ${{ steps.prep.outputs.VERSION_TS }} https://github.com/YouROK/TorrServer.git src
           echo "Set relative path for staticfiles"
           jq -c '. + { "homepage": "./" }' ./src/web/package.json --indent 2 > ./src/web/package.$$.json
-          sed -i '6s/.*/  const url = `${window.location.protocol}:\/\/api.themoviedb.org\/3\/search\/multi`/' ./src/components/Add/helpers.js
-          sed -i '7s/.*/  const imgHost = language === "ru" ? `${window.location.protocol}:\/\/imagetmdb.com` : `${window.location.protocol}:\/\/image.tmdb.org`/' ./src/components/Add/helpers.js
+          sed -i '6s/.*/  const url = `${window.location.protocol}:\/\/api.themoviedb.org\/3\/search\/multi`/' ./src/web/src/components/Add/helpers.js
+          sed -i '7s/.*/  const imgHost = language === "ru" ? `${window.location.protocol}:\/\/imagetmdb.com` : `${window.location.protocol}:\/\/image.tmdb.org`/' ./src/web/src/components/Add/helpers.js
           mv ./src/web/package.$$.json ./src/web/package.json
 
       - name: 💾 Upload artifact
