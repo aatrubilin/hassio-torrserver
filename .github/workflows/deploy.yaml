@@ -51,7 +51,7 @@ jobs:
           mv ./src/web/package.$$.json ./src/web/package.json
 
       - name: 💾 Upload artifact
-        uses: actions/upload-artifact@v4.6.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: src
           path: ./torrserver/.build
