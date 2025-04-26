@@ -5,7 +5,7 @@ configuration:
     description: "Enable/disable basic access authentication"
   logins:
     name: "Logins"
-    description: "This section defines a http auth user definition"
+    description: "Users list"
   tgtoken:
     name: "Telegram bot token"
     description: "I.e. `123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`"
