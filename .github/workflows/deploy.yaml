@@ -46,6 +46,7 @@ jobs:
           rm -rf src
           echo "Clone TorrServer-${{ steps.prep.outputs.VERSION_TS }}"
           git clone --depth 1 --branch ${{ steps.prep.outputs.VERSION_TS }} https://github.com/YouROK/TorrServer.git src
+          cp ./helpers.js ./src/web/src/components/Add/helpers.js
 
       - name: 💾 Upload artifact
         uses: actions/upload-artifact@v4.6.2
