@@ -154,6 +154,7 @@ func getM3uList(tor *state.TorrentStatus, host string, fromLast bool) string {
 			}
 		}
 	}
+    log.TLogln("m3u: ", m3u)
 	return m3u
 }
 
