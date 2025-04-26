@@ -37,16 +37,6 @@ else
   bashio::log.notice "HTTPAuth: disabled"
 fi
 
-# Add pubipv4
-if [[ "$(bashio::config 'pubipv4')" ]]
-then
-  TORRENTADDR=$(bashio::config "pubipv4")
-  bashio::log.info "pubipv4: ${TORRENTADDR}"
-  FLAGS="${FLAGS} --pubipv4=${TORRENTADDR}"
-else
-  bashio::log.notice "pubipv4: default"
-fi
-
 # Add tgtoken
 if [[ "$(bashio::config 'tgtoken')" ]]
 then

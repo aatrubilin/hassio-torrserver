@@ -6,7 +6,6 @@
 
 - 🕶️Updated TorrServer to MatriX.134
 - 🇷🇺Added Russian translation
-- 🌐️Added `Torrent client address` parameter
 - 🔑Added `Telegram bot token` parameter
 
 ### 🚀 Enhancements

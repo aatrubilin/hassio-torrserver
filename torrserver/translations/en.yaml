@@ -6,7 +6,6 @@ configuration:
   logins:
     name: Logins
     description: This section defines a http auth user definition
-  pubipv4: Public IPv4 address
   tgtoken: Telegram bot token
 network:
   8090/tcp: The port to access TorrServer

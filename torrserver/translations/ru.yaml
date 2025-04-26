@@ -6,7 +6,6 @@ configuration:
   logins:
     name: Логины
     description: В этом разделе задаются пользователи.
-  pubipv4: Публичный IPv4-адрес
   tgtoken: Токен бота Telegram
 network:
   8090/tcp: Порт для доступа к TorrServer
