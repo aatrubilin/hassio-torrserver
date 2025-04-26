@@ -94,7 +94,7 @@ jobs:
           fi
 
       - name: 🌏 Download artifact
-        uses: actions/download-artifact@v4.1.8
+        uses: actions/download-artifact@v4.3.0
         with:
           name: src
           path: ./torrserver/.build
