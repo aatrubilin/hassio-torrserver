@@ -6,7 +6,7 @@ configuration:
   logins:
     name: Логины
     description: В этом разделе задаются пользователи.
-  torrentaddr: Адрес торрент-клиента, например 127.0.0.1:1337 (по умолчанию :PeersListenPort)
+  pubipv4: Публичный IPv4-адрес
   tgtoken: Токен бота Telegram
 network:
   8090/tcp: Порт для доступа к TorrServer
