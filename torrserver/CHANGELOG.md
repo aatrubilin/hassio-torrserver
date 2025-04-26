@@ -5,7 +5,6 @@
 ### ✨ New features
 
 - 🕶️Updated TorrServer to MatriX.134
-- 🇷🇺Added Russian translation
 - 🔑Added `Telegram bot token` parameter
 - 🌐Added custom domain setting for M3u playlist links
 

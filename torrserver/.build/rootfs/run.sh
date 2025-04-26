@@ -38,7 +38,7 @@ else
 fi
 
 # Add M3U_CUSTOM_HOST env
-if [[ "$(bashio::config 'm3u_custom_host')" && "$(bashio::config 'm3u_custom_host')" != "https://your.home.dev" ]]
+if [[ "$(bashio::config 'm3u_custom_host')" ]]
 then
   M3U_CUSTOM_HOST=$(bashio::config "m3u_custom_host")
   export M3U_CUSTOM_HOST
