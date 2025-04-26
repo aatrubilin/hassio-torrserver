@@ -15,7 +15,6 @@ import (
 	"github.com/anacrolix/missinggo/v2/httptoo"
 
 	sets "server/settings"
-	"server/log"
 	"server/torr"
 	"server/torr/state"
 	"server/utils"
