@@ -50,6 +50,10 @@ You can [open an issue here](https://github.com/aatrubilin/hassio-torrserver/iss
 > - [ ] armv7
 > - [x] aarch64
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=aatrubilin/hassio-torrserver&type=Date)](https://www.star-history.com/#aatrubilin/hassio-torrserver&Date)
+
 ## Authors & contributors
 
 The original TorrServer is developed by [@YouROK](https://github.com/YouROK).
