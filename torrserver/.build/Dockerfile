@@ -32,7 +32,7 @@ RUN apk add --update g++ \
   && go run gen_web.go \
   && cd server \
   && go mod tidy \
-  && go clean -i -r -cache \
+  && (go clean -i -r -cache || true) \
   && go build -ldflags '-w -s' --o "torrserver" ./cmd
 #### BUILD TORRSERVER MULTIARCH END ###
 
