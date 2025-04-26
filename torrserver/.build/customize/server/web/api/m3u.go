@@ -117,7 +117,8 @@ func getM3uList(tor *state.TorrentStatus, host string, fromLast bool) string {
     var ok bool
     customHost, ok = os.LookupEnv("M3U_CUSTOM_HOST")
     if ok {
-        host = customHost
+        log.TLogln("host changed ", host, "->", customHost)
+        *host = customHost
     }
     log.TLogln("customHost env:", ok, customHost)
 
