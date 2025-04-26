@@ -2,7 +2,7 @@
 ARG BUILD_ARCH
 
 ### FRONT BUILD START ###
-FROM --platform=$BUILDPLATFORM node:16-alpine as front
+FROM --platform=$BUILDPLATFORM node:16-alpine AS front
 COPY ./src/web /app
 WORKDIR /app
 
@@ -28,17 +28,24 @@ ARG TARGETARCH
 ENV GOARCH=$TARGETARCH
 
 ## Build torrserver
-RUN apk add --update g++ \
-  && go run gen_web.go \
-  && cd server \
-  && go mod tidy \
-  && (go clean -i -r -cache || true) \
-  && go build -ldflags '-w -s' --o "torrserver" ./cmd
+#RUN apk add --update g++ \
+#  && go run gen_web.go \
+#  && cd server \
+#  && go mod tidy \
+#  && go clean -i -r -cache \
+#  && go build -ldflags '-w -s' --o "torrserver" ./cmd
 #### BUILD TORRSERVER MULTIARCH END ###
+
+RUN apk add --update g++
+RUN go run gen_web.go
+RUN cd server
+RUN go mod tidy
+RUN go clean -i -r -cache
+RUN go build -ldflags '-w -s' --o "torrserver" ./cmd
 
 
 ### UPX COMPRESSING START ###
-FROM --platform=$BUILDPLATFORM aerysinnovation/upx as compressed
+FROM --platform=$BUILDPLATFORM aerysinnovation/upx AS compressed
 COPY --from=builder /opt/src/server/torrserver ./torrserver
 RUN upx --best --lzma ./torrserver
 ### UPX COMPRESSING END ###
