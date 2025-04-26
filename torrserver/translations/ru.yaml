@@ -6,6 +6,7 @@ configuration:
   logins:
     name: Логины
     description: В этом разделе задаются пользователи.
+  m3u_custom_host: Кастомный домен для ссылок m3u плейлиста
   tgtoken: Токен бота Telegram
 network:
   8090/tcp: Порт для доступа к TorrServer

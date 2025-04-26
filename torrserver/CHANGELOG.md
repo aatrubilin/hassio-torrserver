@@ -7,6 +7,11 @@
 - 🕶️Updated TorrServer to MatriX.134
 - 🇷🇺Added Russian translation
 - 🔑Added `Telegram bot token` parameter
+- 🌐Added custom domain setting for M3u playlist links
+
+### Fixes
+
+- 🔗Fixed TMDB links to use the correct HTTP/HTTPS scheme (#59)
 
 ### 🚀 Enhancements
 

@@ -6,6 +6,7 @@ configuration:
   logins:
     name: Logins
     description: This section defines a http auth user definition
+  m3u_custom_host: Custom domain for M3U playlist link
   tgtoken: Telegram bot token
 network:
   8090/tcp: The port to access TorrServer

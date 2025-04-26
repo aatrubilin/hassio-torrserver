@@ -37,6 +37,16 @@ else
   bashio::log.notice "HTTPAuth: disabled"
 fi
 
+# Add M3U_CUSTOM_HOST env
+if [[ "$(bashio::config 'm3u_custom_host')" && "$(bashio::config 'm3u_custom_host')" != "https://your.home.dev" ]]
+then
+  M3U_CUSTOM_HOST=$(bashio::config "m3u_custom_host")
+  export M3U_CUSTOM_HOST
+  bashio::log.info "Enable custom m3u host: ${M3U_CUSTOM_HOST}"
+else
+  bashio::log.notice "Using default m3u host"
+fi
+
 # Add tgtoken
 if [[ "$(bashio::config 'tgtoken')" ]]
 then

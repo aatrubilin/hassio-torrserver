@@ -3,7 +3,7 @@ name: TorrServer (dev)
 slug: torrserver-dev
 description: TorrServer for home assistant (dev)
 image: ghcr.io/aatrubilin/hassio-torrserver/{arch}
-version: 1.1.2-MatriX.135-dev
+version: 1.1.3-MatriX.135-dev
 url: https://github.com/aatrubilin/hassio-torrserver
 codenotary: aatrubilin@gmail.com
 init: false
@@ -21,14 +21,14 @@ options:
   logins:
     - username: homeassistant
       password: homeassistant
-  pubipv4: ""
+  m3u_custom_host: "https://your.home.dev"
   tgtoken: ""
 schema:
   httpauth: bool
   logins:
     - username: str
       password: password
-  pubipv4: "str?"
+  m3u_custom_host: "str?"
   tgtoken: "str?"
 ingress: true
 ingress_port: 8090
