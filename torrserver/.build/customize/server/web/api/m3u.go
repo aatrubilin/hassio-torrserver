@@ -116,11 +116,13 @@ func getM3uList(tor *state.TorrentStatus, host string, fromLast bool) string {
     var customHost string
     var ok bool
     customHost, ok = os.LookupEnv("M3U_CUSTOM_HOST")
+    log.TLogln("host: ", host)
     if ok {
         log.TLogln("host changed ", host, "->", customHost)
-        *host = customHost
+        host = customHost
     }
     log.TLogln("customHost env:", ok, customHost)
+    log.TLogln("new host: ", host)
 
 	m3u := ""
 	from := 0
