@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.0-MatriX.135 [2025-04-26]
+## 1.3.1-MatriX.135 [2025-04-26]
 
 ### ✨ New features
 
@@ -12,6 +12,7 @@
 ### Fixes
 
 - 🔗 Fixed TMDB links to use the correct HTTP/HTTPS scheme (#59)
+- 🕵️ Obfuscate tg token in logs
 
 ### 🚀 Enhancements
 
