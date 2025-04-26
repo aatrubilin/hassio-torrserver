@@ -4,18 +4,18 @@
 
 ### ✨ New features
 
-- 🕶Upgraded TorrServer to MatriX.134
-- 🔑Added `Telegram bot token` parameter
-- 🌐Added `Custom host for M3U playlist links` parameter
-- 🇷🇺Added Russian translation
+- 🕶 Upgraded TorrServer to MatriX.134
+- 🔑 Added `Telegram bot token` parameter
+- 🌐 Added `Custom host for M3U playlist links` parameter
+- 🇷🇺 Added Russian translation
 
 ### Fixes
 
-- 🔗Fixed TMDB links to use the correct HTTP/HTTPS scheme (#59)
+- 🔗 Fixed TMDB links to use the correct HTTP/HTTPS scheme (#59)
 
 ### 🚀 Enhancements
 
-- 🐳Update Dockerfile
+- 🐳 Update Dockerfile
 
 ### ⬆️ Dependency updates
 
