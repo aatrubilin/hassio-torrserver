@@ -15,6 +15,7 @@ import (
 	"github.com/anacrolix/missinggo/v2/httptoo"
 
 	sets "server/settings"
+	"server/log"
 	"server/torr"
 	"server/torr/state"
 	"server/utils"
@@ -112,9 +113,13 @@ func sendM3U(c *gin.Context, name, hash string, m3u string) {
 }
 
 func getM3uList(tor *state.TorrentStatus, host string, fromLast bool) string {
-    if customHost, ok := os.LookupEnv("M3U_CUSTOM_HOST"); ok && customHost != "" {
-		host = customHost
-	}
+    var customHost string
+    var ok bool
+    customHost, ok = os.LookupEnv("M3U_CUSTOM_HOST")
+    if ok && customHost != "" {
+        host = customHost
+    }
+    log.TLogln("customHost:", ok, customHost)
 
 	m3u := ""
 	from := 0

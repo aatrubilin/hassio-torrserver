@@ -45,7 +45,7 @@ RUN upx --best --lzma ./torrserver
 
 
 ### BUILD MAIN IMAGE START ###
-FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:17.2.4
+FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:17.2.4 AS addon
 
 # RUN apk add --no-cache --update ffmpeg
 
