@@ -119,7 +119,7 @@ func getM3uList(tor *state.TorrentStatus, host string, fromLast bool) string {
     if ok && customHost != "" {
         host = customHost
     }
-    log.TLogln("customHost:", ok, customHost)
+    log.TLogln("customHost env:", ok, customHost)
 
 	m3u := ""
 	from := 0
