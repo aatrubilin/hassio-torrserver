@@ -2,9 +2,11 @@
 configuration:
   httpauth:
     name: HTTP Auth
-    description: Enable/disable basic access authentication.
+    description: Enable/disable basic access authentication
   logins:
     name: Logins
-    description: This section defines a http auth user definition.
+    description: This section defines a http auth user definition
+  torrentaddr: Torrent client address, like 127.0.0.1:1337 (default :PeersListenPort)
+  tgtoken: Telegram bot token
 network:
-  8090/tcp: The port to access TorrServer.
+  8090/tcp: The port to access TorrServer

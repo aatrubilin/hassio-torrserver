@@ -21,11 +21,15 @@ options:
   logins:
     - username: homeassistant
       password: homeassistant
+  torrentaddr: ""
+  tgtoken: ""
 schema:
   httpauth: bool
   logins:
     - username: str
       password: password
+  torrentaddr: str
+  tgtoken: str
 ingress: true
 ingress_port: 8090
 ports:

@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.2.0-MatriX.135 [2025-04-26]
+
+### ✨ New features
+
+- 🕶️Updated TorrServer to MatriX.134
+- 🇷🇺Added Russian translation
+- 🌐️Added `Torrent client address` parameter
+- 🔑Added `Telegram bot token` parameter
+
+### 🚀 Enhancements
+
+- 🐳Update Dockerfile build
+
+### ⬆️ Dependency updates
+
+- ⬆️ Update ghcr.io/hassio-addons/base Docker tag to v17.2.4 @renovate (#64)
+
 ## 1.2.0-MatriX.134 [2025-01-20]
 
 ### 🚀 Enhancements
@@ -16,7 +33,7 @@
 
 ### ⬆️ Dependency updates
 
-- Updated TorrServer to MatriX.134
+- 🕶️Updated TorrServer to MatriX.134
 
 ## 1.0.0-MatriX.132 [2024-04-23]
 

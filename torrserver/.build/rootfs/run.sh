@@ -37,6 +37,26 @@ else
   bashio::log.notice "HTTPAuth: disabled"
 fi
 
+# Add torrentaddr
+if [[ "$(bashio::config 'torrentaddr')" ]]
+then
+  TORRENTADDR=$(bashio::config "torrentaddr")
+  bashio::log.info "torrentaddr: ${TORRENTADDR}"
+  FLAGS="${FLAGS} --torrentaddr=${TORRENTADDR}"
+else
+  bashio::log.notice "torrentaddr: default"
+fi
+
+# Add tgtoken
+if [[ "$(bashio::config 'tgtoken')" ]]
+then
+  TGTOKEN=$(bashio::config "tgtoken")
+  bashio::log.info "Enable telegram bot integration"
+  FLAGS="${FLAGS} --tgtoken=${TGTOKEN}"
+else
+  bashio::log.notice "Telegram bot integration disabled"
+fi
+
 # Starting torrserver
 export GODEBUG="madvdontneed=1"
 bashio::log.info "Starting torrserver..."

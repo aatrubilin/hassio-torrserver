@@ -15,7 +15,7 @@ RUN --mount=type=secret,id=tmdb_api_key,env=REACT_APP_TMDB_API_KEY \
 
 
 ### BUILD TORRSERVER MULTIARCH START ###
-FROM --platform=$BUILDPLATFORM golang:1.21.2-alpine as builder
+FROM --platform=$BUILDPLATFORM golang:1.24.0-alpine AS builder
 
 COPY ./src /opt/src
 COPY --from=front /app/build /opt/src/web/build
@@ -32,6 +32,7 @@ RUN apk add --update g++ \
   && go run gen_web.go \
   && cd server \
   && go mod tidy \
+  && go clean -i -r -cache \
   && go build -ldflags '-w -s' --o "torrserver" ./cmd
 #### BUILD TORRSERVER MULTIARCH END ###
 
