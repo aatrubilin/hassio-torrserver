@@ -36,12 +36,6 @@ RUN apk add --update g++ \
   && go build -ldflags '-w -s' --o "torrserver" ./cmd
 #### BUILD TORRSERVER MULTIARCH END ###
 
-#RUN apk add --update g++
-#RUN go run gen_web.go
-#RUN cd server && go mod tidy
-#RUN cd server && go clean -i -r -cache
-#RUN cd server && go build -ldflags '-w -s' --o "torrserver" ./cmd
-
 
 ### UPX COMPRESSING START ###
 FROM --platform=$BUILDPLATFORM aerysinnovation/upx AS compressed

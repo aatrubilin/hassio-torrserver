@@ -112,10 +112,10 @@ func sendM3U(c *gin.Context, name, hash string, m3u string) {
 }
 
 func getM3uList(tor *state.TorrentStatus, host string, fromLast bool) string {
-    customHost, ok = os.LookupEnv("M3U_CUSTOM_HOST")
-    if ok && customHost != "" {
-        host = customHost
-    }
+    if customHost, ok := os.LookupEnv("M3U_CUSTOM_HOST"); ok && customHost != "" {
+		host = customHost
+	}
+
 	m3u := ""
 	from := 0
 	if fromLast {
