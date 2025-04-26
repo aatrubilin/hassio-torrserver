@@ -1,0 +1,16 @@
+---
+configuration:
+  httpauth:
+    name: "HTTP Аутентификация"
+    description: "Включение/выключение базовой аутентификации доступа"
+  logins:
+    name: "Учетные записи"
+    description: "В этом разделе задаются пользователи"
+  m3u_custom_host:
+    name: "Пользовательский хост для ссылок в m3u плейлисте"
+    description: "Например `http://homeassistant:8090`, оставьте пустым, чтобы отключить"
+  tgtoken:
+    name: "Токен бота telegram"
+    description: "Например `123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`"
+network:
+  8090/tcp: "Порт для доступа к TorrServer"

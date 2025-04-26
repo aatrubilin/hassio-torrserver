@@ -1,12 +1,13 @@
 # Changelog
 
-## 1.2.0-MatriX.135 [2025-04-26]
+## 1.1.8-MatriX.135-dev [2025-04-26]
 
 ### ✨ New features
 
 - 🕶️Updated TorrServer to MatriX.134
 - 🔑Added `Telegram bot token` parameter
-- 🌐Added custom domain setting for M3u playlist links
+- 🌐Added `Custom host for M3U playlist links` parameter
+- 🇷🇺Added Russian translation
 
 ### Fixes
 
