@@ -1,5 +1,11 @@
 # Changelog
 
+## FUTURE
+
+### 🚀 Enhancements
+
+- 🎬 Added sidebar icon
+
 ## 1.3.0-MatriX.135 [2025-04-26]
 
 ### ✨ New features
