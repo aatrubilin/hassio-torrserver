@@ -37,4 +37,4 @@ ports:
 ports_description:
   8090/tcp: TorrServer port
 startup: system
-panel_icon: mdi:movie-open
+panel_icon: mdi:movie
