@@ -1,6 +1,11 @@
 # Changelog
 
-## FUTURE
+## 1.3.1-MatriX.135 [2025-04-28]
+
+### Fixes
+
+- 🔗 Fixed download playlist link
+- 🔒 Force use https for image links
 
 ### 🚀 Enhancements
 
