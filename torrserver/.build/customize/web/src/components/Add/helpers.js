@@ -4,7 +4,7 @@ import ptt from 'parse-torrent-title'
 
 export const getMoviePosters = (movieName, language = 'en') => {
   const url = `${window.location.protocol}//api.themoviedb.org/3/search/multi`
-  const imgHost = `${window.location.protocol}//${language === 'ru' ? 'imagetmdb.com' : 'image.tmdb.org'}`
+  const imgHost = `https://${language === 'ru' ? 'imagetmdb.com' : 'image.tmdb.org'}`
 
   return axios
     .get(url, {
