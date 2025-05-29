@@ -120,7 +120,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🏗 Build
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           load: true
           context: ./torrserver/.build
