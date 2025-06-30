@@ -32,6 +32,7 @@ schema:
   m3u_custom_host: "str?"
 ingress: true
 ingress_port: 8090
+host_network: true
 ports:
   8090/tcp: 8090
   9080/tcp: 9080
