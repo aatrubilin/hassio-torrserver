@@ -34,7 +34,9 @@ ingress: true
 ingress_port: 8090
 ports:
   8090/tcp: 8090
+  9080/tcp: 9080
 ports_description:
   8090/tcp: TorrServer port
+  9080/tcp: DLNA-server port
 startup: system
 panel_icon: mdi:movie
