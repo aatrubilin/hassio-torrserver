@@ -1,21 +1,32 @@
 # Changelog
 
+## 1.3.1-MatriX.135 [2025-04-28]
+
+### Fixes
+
+- 🔗 Fixed download playlist link
+- 🔒 Force use https for image links
+
+### 🚀 Enhancements
+
+- 🎬 Added sidebar icon
+
 ## 1.3.0-MatriX.135 [2025-04-26]
 
 ### ✨ New features
 
-- 🕶Upgraded TorrServer to MatriX.134
-- 🔑Added `Telegram bot token` parameter
-- 🌐Added `Custom host for M3U playlist links` parameter
-- 🇷🇺Added Russian translation
+- 🕶 Upgraded TorrServer to MatriX.135
+- 🔑 Added `Telegram bot token` parameter
+- 🌐 Added `Custom host for M3U playlist links` parameter
+- 🇷🇺 Added Russian translation
 
 ### Fixes
 
-- 🔗Fixed TMDB links to use the correct HTTP/HTTPS scheme (#59)
+- 🔗 Fixed TMDB links to use the correct HTTP/HTTPS scheme (#59)
 
 ### 🚀 Enhancements
 
-- 🐳Update Dockerfile
+- 🐳 Update Dockerfile
 
 ### ⬆️ Dependency updates
 
