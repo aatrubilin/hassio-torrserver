@@ -24,4 +24,3 @@ configuration:
 network:
   8090/tcp: "Порт http для доступа к TorrServer"
   8091/tcp: "Порт https для доступа к TorrServer"
-  9080/tcp: "Порт для доступа к DLNA-серверу"

@@ -24,4 +24,3 @@ configuration:
 network:
   8090/tcp: "The http port to access TorrServer"
   8091/tcp: "The https port to access TorrServer"
-  9080/tcp: "The port to access DLNA-server"
