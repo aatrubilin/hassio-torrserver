@@ -1,6 +1,24 @@
 #!/usr/bin/with-contenv bashio
 set -euo pipefail
 
+write_pem_block() {
+  local pem_content="$1"
+  local pem_file="$2"
+  local pem_type="$3"  # For example: CERTIFICATE, PRIVATE KEY, RSA PRIVATE KEY
+
+  if [[ -z "$pem_content" || -z "$pem_file" || -z "$pem_type" ]]; then
+    echo "Usage: write_pem_block <pem_content> <pem_file> <pem_type>" >&2
+    return 1
+  fi
+
+  echo "$pem_content" | tr -d '\n' | \
+    sed -E "s/.*-----BEGIN ${pem_type}----- *//; s/ *-----END ${pem_type}-----.*//" | \
+    tr -d ' ' | \
+    fold -w 64 | \
+    awk "BEGIN { print \"-----BEGIN ${pem_type}-----\" } { print } END { print \"-----END ${pem_type}-----\" }" \
+    > "$pem_file"
+}
+
 FLAGS="--path $TS_CONF_PATH --torrentsdir $TS_TORR_DIR --port $TS_PORT"
 
 # Create conf path if not exists
@@ -55,6 +73,32 @@ then
   FLAGS="${FLAGS} --tgtoken=${TGTOKEN}"
 else
   bashio::log.notice "Telegram bot integration disabled"
+fi
+
+# Ssl
+if [[ "$(bashio::config 'ssl')" = true ]]
+then
+  bashio::log.info "ssl: enabled"
+  FLAGS="${FLAGS} --ssl --sslport=8091"
+  SSL_PATH="${TS_CONF_PATH}/.ssl"
+  SSL_CERT=$(bashio::config "ssl_cert")
+  if [ ! -d $SSL_CERT ]; then
+    mkdir -p $SSL_PATH
+    SSL_CERT_PATH="${SSL_PATH}/cert.pem"
+    write_pem_block "$SSL_CERT" $SSL_CERT_PATH "CERTIFICATE"
+    FLAGS="${FLAGS} --sslcert=${SSL_CERT_PATH}"
+    bashio::log.info "ssl: added cert to ${SSL_CERT_PATH}"
+  fi
+  SSL_KEY=$(bashio::config "ssl_key")
+  if [ ! -d $SSL_KEY ]; then
+    mkdir -p $SSL_PATH
+    SSL_KEY_PATH="${SSL_PATH}/key.pem"
+    write_pem_block "$SSL_KEY" $SSL_KEY_PATH "PRIVATE KEY"
+    FLAGS="${FLAGS} --sslkey=${SSL_KEY_PATH}"
+    bashio::log.info "ssl: added key to ${SSL_KEY_PATH}"
+  fi
+else
+  bashio::log.notice "ssl: disabled"
 fi
 
 # Starting torrserver

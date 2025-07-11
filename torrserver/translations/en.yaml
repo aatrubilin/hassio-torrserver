@@ -12,5 +12,16 @@ configuration:
   m3u_custom_host:
     name: "Custom host for M3U playlist links"
     description: "I.e. `http://homeassistant:8090`, leave empty to disable"
+  ssl:
+    name: "Enable SSL"
+    description: "Enables https for web server"
+  ssl_cert:
+    name: "SSL certificate"
+    description: "If not set, will be taken from db (if stored previously) or default self-signed certificate/key will be generated."
+  ssl_key:
+    name: "SSL private key"
+    description: "If not set, will be taken from db (if stored previously) or default self-signed certificate/key will be generated"
 network:
-  8090/tcp: "The port to access TorrServer"
+  8090/tcp: "The http port to access TorrServer"
+  8091/tcp: "The https port to access TorrServer"
+  9080/tcp: "The port to access DLNA-server"
