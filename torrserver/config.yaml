@@ -3,7 +3,7 @@ name: TorrServer-dev
 slug: torrserver-dev
 description: TorrServer for home assistant
 image: ghcr.io/aatrubilin/hassio-torrserver/{arch}
-version: 1.3.4-MatriX.135-dev
+version: 1.3.5-MatriX.135-dev
 url: https://github.com/aatrubilin/hassio-torrserver
 codenotary: aatrubilin@gmail.com
 init: false
@@ -38,50 +38,10 @@ schema:
   ssl_key: "str?"
 ingress: true
 ingress_port: 8090
+host_network: true
 ports:
   8090/tcp: 8090
   8091/tcp: 8091
-  # dlna
-  1900/udp: 1900
-  8200/tcp: 8200
-  49152/tcp: 49152
-  49152/udp: 49152
-  49153/tcp: 49152
-  49153/udp: 49152
-  49154/tcp: 49152
-  49154/udp: 49152
-  49155/tcp: 49152
-  49155/udp: 49152
-  49156/tcp: 49152
-  49156/udp: 49152
-  49157/tcp: 49152
-  49157/udp: 49152
-  49158/tcp: 49152
-  49158/udp: 49152
-  49159/tcp: 49152
-  49159/udp: 49152
-  49160/tcp: 49152
-  49160/udp: 49152
-  49161/tcp: 49152
-  49161/udp: 49152
-  49162/tcp: 49152
-  49162/udp: 49152
-  49163/tcp: 49152
-  49163/udp: 49152
-  49164/tcp: 49152
-  49164/udp: 49152
-  49165/tcp: 49152
-  49165/udp: 49152
-  49166/tcp: 49152
-  49166/udp: 49152
-  49167/tcp: 49152
-  49167/udp: 49152
-  49168/tcp: 49152
-  49168/udp: 49152
-  49169/tcp: 49152
-  49169/udp: 49152
-  49170/tcp: 49152
-  49170/udp: 49152
 ports_description:
   8090/tcp: TorrServer http port
   8091/tcp: TorrServer https port
