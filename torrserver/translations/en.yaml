@@ -1,7 +1,10 @@
 ---
 configuration:
+  port:
+    name: "HTTP port"
+    description: "Ingress mode works only with 8090 port"
   httpauth:
-    name: "HTTP Auth"
+    name: "HTTP auth"
     description: "Enable/disable basic access authentication"
   logins:
     name: "Logins"
@@ -15,6 +18,9 @@ configuration:
   ssl:
     name: "Enable SSL"
     description: "Enables https for web server"
+  ssl_port:
+    name: "SSL port"
+    description: "Web server https port"
   ssl_cert:
     name: "SSL certificate"
     description: "If not set, will be taken from db (if stored previously) or default self-signed certificate/key will be generated."

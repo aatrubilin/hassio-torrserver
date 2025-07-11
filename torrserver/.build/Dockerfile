@@ -51,8 +51,7 @@ FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:17.2.4 AS addon
 
 # Environment variables
 ENV TS_CONF_PATH="/config" \
-    TS_TORR_DIR="/config/torrents" \
-    TS_PORT=8090
+    TS_TORR_DIR="/config/torrents"
 
 # Copy files
 COPY --from=compressed ./torrserver /usr/bin/torrserver

@@ -19,6 +19,7 @@ write_pem_block() {
     > "$pem_file"
 }
 
+TS_PORT=$(bashio::config "port")
 FLAGS="--path $TS_CONF_PATH --torrentsdir $TS_TORR_DIR --port $TS_PORT"
 
 # Create conf path if not exists
@@ -79,7 +80,8 @@ fi
 if [[ "$(bashio::config 'ssl')" = true ]]
 then
   bashio::log.info "ssl: enabled"
-  FLAGS="${FLAGS} --ssl --sslport=8091"
+  SSL_PORT=$(bashio::config "ssl_port")
+  FLAGS="${FLAGS} --ssl --sslport=${SSL_PORT}"
   SSL_PATH="${TS_CONF_PATH}/.ssl"
   SSL_CERT=$(bashio::config "ssl_cert")
   if [ ! -d "$SSL_CERT" ]; then

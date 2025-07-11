@@ -1,7 +1,10 @@
 ---
 configuration:
+  port:
+    name: "HTTP порт"
+    description: "Ingress режим работает только на порту 8090"
   httpauth:
-    name: "HTTP Аутентификация"
+    name: "HTTP аутентификация"
     description: "Включение/выключение аутентификации доступа"
   logins:
     name: "Учетные записи"
@@ -15,6 +18,9 @@ configuration:
   ssl:
     name: "Включить SSL"
     description: "Включает https для веб-сервера"
+  ssl_port:
+    name: "SSL порт"
+    description: "Порт https"
   ssl_cert:
     name: "SSL сертификат"
     description: "Если значение не задано, сертификат/ключ будет взят из базы данных (если он был сохранен ранее) или будет сгенерирован самоподписанный сертификат/ключ по умолчанию."
