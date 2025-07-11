@@ -82,7 +82,7 @@ then
   FLAGS="${FLAGS} --ssl --sslport=8091"
   SSL_PATH="${TS_CONF_PATH}/.ssl"
   SSL_CERT=$(bashio::config "ssl_cert")
-  if [ ! -d $SSL_CERT ]; then
+  if [ ! -d "$SSL_CERT" ]; then
     mkdir -p $SSL_PATH
     SSL_CERT_PATH="${SSL_PATH}/cert.pem"
     write_pem_block "$SSL_CERT" $SSL_CERT_PATH "CERTIFICATE"
@@ -90,7 +90,7 @@ then
     bashio::log.info "ssl: added cert to ${SSL_CERT_PATH}"
   fi
   SSL_KEY=$(bashio::config "ssl_key")
-  if [ ! -d $SSL_KEY ]; then
+  if [ ! -d "$SSL_KEY" ]; then
     mkdir -p $SSL_PATH
     SSL_KEY_PATH="${SSL_PATH}/key.pem"
     write_pem_block "$SSL_KEY" $SSL_KEY_PATH "PRIVATE KEY"
