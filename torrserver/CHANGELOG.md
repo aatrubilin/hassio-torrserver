@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.4.0-MatriX.135 [2025-07-11]
+
+### 🚨 Breaking changes
+
+- Make sure to reset add-on options to defaults for proper display
+- Switched to host network; Ingress still enabled, but will break if default port 8090 is changed
+
+### ✨ New features
+
+- 🔐 Added ssl options (#59)
+
+### Fixes
+
+- 📺 Fixed DLNA server issue @APushchin (#75)
+
+### ⬆️ Dependency updates
+
+- ⬆️ Update ghcr.io/hassio-addons/base Docker tag to v18.0.3
+
 ## 1.3.1-MatriX.135 [2025-04-28]
 
 ### Fixes
