@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0-MatriX.136 [2025-08-15]
+
+### ✨ New features
+
+- 🕶 Upgraded TorrServer to MatriX.136
+
 ## 1.4.0-MatriX.135 [2025-07-11]
 
 ### 🚨 Breaking changes
