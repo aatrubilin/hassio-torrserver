@@ -1,9 +1,9 @@
 ---
-name: TorrServer
-slug: torrserver
+name: TorrServer-dev
+slug: torrserver-dev
 description: TorrServer for home assistant
 image: ghcr.io/aatrubilin/hassio-torrserver/{arch}
-version: 1.4.0-MatriX.135
+version: 1.4.0-MatriX.136-dev
 url: https://github.com/aatrubilin/hassio-torrserver
 codenotary: aatrubilin@gmail.com
 init: false
