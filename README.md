@@ -7,9 +7,9 @@
 
 ![Supports aarch64 Architecture](https://img.shields.io/badge/aarch64-yes-green.svg)
 ![Supports amd64 Architecture](https://img.shields.io/badge/amd64-yes-green.svg)
-![Supports armhf Architecture](https://img.shields.io/badge/armhf-unknown-dbdbdc.svg)
-![Supports armv7 Architecture](https://img.shields.io/badge/armv7-more%20likely-blue.svg)
-![Supports i386 Architecture](https://img.shields.io/badge/i386-unknown-dbdbdc.svg)
+![Supports armhf Architecture](https://img.shields.io/badge/armhf-no-red.svg)
+![Supports armv7 Architecture](https://img.shields.io/badge/armv7-no-red.svg)
+![Supports i386 Architecture](https://img.shields.io/badge/i386-no-red.svg)
 
 This is a TorrServer for Home Assistant.
 
@@ -42,13 +42,6 @@ This project based on [https://github.com/YouROK/TorrServer](https://github.com/
 Got questions or problems?
 
 You can [open an issue here](https://github.com/aatrubilin/hassio-torrserver/issues) GitHub.
-
-> Please keep in mind, that this addon is tested only with HA OS on:
-> - [x] amd64
-> - [ ] i386
-> - [ ] armhf
-> - [ ] armv7
-> - [x] aarch64
 
 ## Star History
 
