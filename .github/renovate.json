@@ -6,21 +6,33 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["config.yaml"],
-      "matchStrings": ["version: ([0-9.]+)-(?<currentValue>.+)\\n"],
+      "managerFilePatterns": [
+        "/config.yaml/"
+      ],
+      "matchStrings": [
+        "version: ([0-9.]+)-(?<currentValue>.+)\\n"
+      ],
       "depNameTemplate": "YouROK/TorrServer",
       "datasourceTemplate": "github-releases"
     },
     {
-      "fileMatch": ["torrserver/.build/Dockerfile"],
-      "matchStrings": ["FROM ghcr\\.io\\/hassio-addons\\/base\\/\\$BUILD_ARCH:(?<currentValue>.*?)\\n"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/torrserver/.build/Dockerfile/"
+      ],
+      "matchStrings": [
+        "FROM ghcr\\.io\\/hassio-addons\\/base\\/\\$BUILD_ARCH:(?<currentValue>.*?)\\n"
+      ],
       "depNameTemplate": "ghcr.io/hassio-addons/base",
       "datasourceTemplate": "docker"
     }
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["golang", "node"],
+      "matchPackageNames": [
+        "golang",
+        "node"
+      ],
       "enabled": false
     }
   ]
