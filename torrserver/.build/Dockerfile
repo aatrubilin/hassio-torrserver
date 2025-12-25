@@ -1,5 +1,6 @@
 # Based on https://github.com/YouROK/TorrServer/blob/master/Dockerfile
 ARG BUILD_ARCH
+ARG BUILD_TYPE=release
 
 ### FRONT BUILD START ###
 FROM --platform=$BUILDPLATFORM node:16-alpine AS front
@@ -45,16 +46,24 @@ RUN upx --best --lzma ./torrserver
 
 
 ### BUILD MAIN IMAGE START ###
+FROM builder AS source_debug
+FROM compressed AS source_release
+
+FROM source_${BUILD_TYPE} AS final_source
+
 FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:19.0.0 AS addon
 
-# RUN apk add --no-cache --update ffmpeg
+ENV TS_CONF_PATH="/config" \
+    TS_TORR_DIR="/config/torrents"
 
 # Environment variables
 ENV TS_CONF_PATH="/config" \
     TS_TORR_DIR="/config/torrents"
 
+# RUN apk add --no-cache --update ffmpeg
+
 # Copy files
-COPY --from=compressed ./torrserver /usr/bin/torrserver
+COPY --from=final_source ./torrserver /usr/bin/torrserver
 COPY ./rootfs /
 
 # Add execution permissions
