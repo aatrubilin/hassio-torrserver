@@ -3,7 +3,7 @@ name: TorrServer-dev
 slug: torrserver-dev
 description: TorrServer for home assistant
 image: ghcr.io/aatrubilin/hassio-torrserver/{arch}
-version: 1.4.4-MatriX.137-dev
+version: 1.4.5-MatriX.137-dev
 url: https://github.com/aatrubilin/hassio-torrserver
 codenotary: aatrubilin@gmail.com
 init: false
@@ -40,6 +40,6 @@ schema:
 ingress: true
 ingress_port: 8090
 host_network: true
-watchdog: "[PROTO:ssl]://[HOST]:[PORT:port]/echo"
+watchdog: "http://[HOST]:[PORT:8090]/echo"
 startup: system
 panel_icon: mdi:movie
