@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -41,7 +40,11 @@ func allPlayList(c *gin.Context) {
 	hash := ""
 	// fn=file.m3u fix forkplayer bug with end .m3u in link
 	for _, tr := range torrs {
-		list += "#EXTINF:0 type=\"playlist\"," + tr.Title + "\n"
+		list += "#EXTINF:0"
+		if tr.Poster != "" {
+			list += " tvg-logo=\"" + tr.Poster + "\""
+		}
+		list += " type=\"playlist\"," + tr.Title + "\n"
 		list += host + "/stream/" + url.PathEscape(tr.Title) + ".m3u?link=" + tr.TorrentSpec.InfoHash.HexString() + "&m3u&fn=file.m3u\n"
 		hash += tr.Hash().HexString()
 	}
