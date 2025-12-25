@@ -12,7 +12,7 @@
       "datasourceTemplate": "github-releases"
     },
     {
-      "fileMatch": ["Dockerfile"],
+      "fileMatch": ["torrserver/.build/Dockerfile"],
       "matchStrings": ["FROM ghcr\\.io\\/hassio-addons\\/base\\/\\$BUILD_ARCH:(?<currentValue>.*?)\\n"],
       "depNameTemplate": "ghcr.io/hassio-addons/base",
       "datasourceTemplate": "docker"
