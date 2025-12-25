@@ -103,6 +103,15 @@ else
   bashio::log.notice "ssl: disabled"
 fi
 
+# Enable web access logs
+if [[ "$(bashio::config 'weblog')" = true ]]
+then
+  bashio::log.info "Weblog: enabled"
+  FLAGS="${FLAGS} --weblogpath /dev/stdout"
+else
+  bashio::log.notice "Weblog: disabled"
+fi
+
 # Starting torrserver
 export GODEBUG="madvdontneed=1"
 bashio::log.info "Starting torrserver..."

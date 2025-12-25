@@ -27,6 +27,9 @@ configuration:
   ssl_key:
     name: "SSL private key"
     description: "If not set, will be taken from db (if stored previously) or default self-signed certificate/key will be generated"
+  weblog:
+    name: "Weblog"
+    description: "Enable web access log"
 network:
   8090/tcp: "The http port to access TorrServer"
   8091/tcp: "The https port to access TorrServer"
