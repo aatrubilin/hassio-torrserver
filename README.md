@@ -15,7 +15,7 @@ This is a TorrServer for Home Assistant.
 
 🌟 Please consider supporting [this project](https://github.com/aatrubilin/hassio-torrserver) by giving it a star.
 
-![assets/screenshot.jpg](assets/screenshot.jpg)
+![assets/screenshot.png](assets/screenshot.png)
 
 This project based on [https://github.com/YouROK/TorrServer](https://github.com/YouROK/TorrServer)
 
