@@ -11,20 +11,19 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
   /init rix,
 
   # 2. System binaries (Standard)
-  /bin/** ix,
-  /usr/bin/** ix,
-  /sbin/** ix,
-  /usr/sbin/** ix,
+  /bin/** rix,
+  /usr/bin/** rix,
+  /sbin/** rix,
+  /usr/sbin/** rix,
 
-  # 3. S6-Overlay & Bashio SPECIFIC PATHS (FIX FOR YOUR ERROR)
-  # S6 stores binaries in /package and symlinks them to /command
-  /package/** ix,
-  /command/** ix,
-  /libexec/** ix,       # Location of s6-overlay-suexec
-  /usr/lib/bashio/** ix,
+  # 3. S6-Overlay & Bashio
+  /package/** rix,
+  /command/** rix,
+  /libexec/** rix,
+  /usr/lib/bashio/** rix,
 
   # 4. Runtime & Service definitions
-  /run/** ix,           # Allow executing generated scripts in /run
+  /run/** rix,
   /etc/services.d/** rix,
   /etc/cont-init.d/** rix,
   /etc/s6-overlay/** rix,
@@ -33,8 +32,11 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
   /data/** rw,
   /config/** rwk,
   /share/** rw,
+
+  # 6. Temp files & terminal
   /tmp/** rwk,
   /dev/tty rw,
+  /dev/console rw,
 
   # --- [ PROFILE TRANSITION ] ---
   # Only restrict the actual TorrServer binary
@@ -49,7 +51,7 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
     # Network
     network,
 
-    # Signals (FIXED SYNTAX: moved to new line)
+    # Signals
     signal (receive) peer=torrserver,
 
     # Data Access
