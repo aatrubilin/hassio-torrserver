@@ -23,11 +23,11 @@ This project based on [https://github.com/YouROK/TorrServer](https://github.com/
 
 [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https://github.com/aatrubilin/hassio-torrserver)
 
-> Or, navigate in your Home Assistant frontend to
+> - Or, navigate in your Home Assistant frontend to
   <kbd>Settings</kbd> -> <kbd>Add-ons</kbd> -> <kbd>Add-on Store (Bottom Right)</kbd>.
-> Click the 3-dots menu at upper right <kbd>...</kbd> > <kbd>Repositories</kbd>
+> - Click the 3-dots menu at upper right <kbd>...</kbd> > <kbd>Repositories</kbd>
     and add this repository's URL:
-> `https://github.com/aatrubilin/hassio-torrserver`
+> - `https://github.com/aatrubilin/hassio-torrserver`
 
 - Reload the page, scroll to the bottom to find the new repository,
    and click the new add-on named "TorrServer" (refresh the cache if it doesn't appear)
