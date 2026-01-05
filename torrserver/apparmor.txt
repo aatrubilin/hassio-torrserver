@@ -5,70 +5,83 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/bash>
   #include <abstractions/ssl_certs>
 
-  # --- [ PARENT PROCESS (S6 + Bashio + System) ] ---
+  # --- Parent Process (S6-Overlay + Bashio + run.sh) ---
 
-  # 1. Entrypoint & S6 Core
+  # S6-Overlay entrypoint
   /init rix,
 
-  # 2. System binaries (Standard)
+  # System binaries required for initialization scripts and Bashio
   /bin/** rix,
   /usr/bin/** rix,
   /sbin/** rix,
   /usr/sbin/** rix,
 
-  # 3. S6-Overlay & Bashio
+  # S6-Overlay v3 specific binary paths
   /package/** rix,
   /command/** rix,
   /libexec/** rix,
   /usr/lib/bashio/** rix,
 
-  # 4. Runtime & Service definitions
-  /run/** rix,
+  # Runtime directory access
+  # S6 generates and executes scripts in /run during startup (requires write + execute)
+  /run/ rwk,
+  /run/** rwkix,
+  /var/run/ rwk,
+  /var/run/** rwkix,
+
+  # Service definitions and overlay configurations
   /etc/services.d/** rix,
   /etc/cont-init.d/** rix,
   /etc/s6-overlay/** rix,
 
-  # 5. Storage Access
+  # Persistent storage access
   /data/** rw,
   /config/** rwk,
   /share/** rw,
 
-  # 6. Temp files & terminal
+  # Temporary files and standard devices
   /tmp/** rwk,
   /dev/tty rw,
   /dev/console rw,
+  /dev/null rw,
+  /dev/zero rw,
+  /dev/random rw,
+  /dev/urandom rw,
+  /dev/ptmx rw,
+  /dev/pts/* rw,
 
-  # --- [ PROFILE TRANSITION ] ---
-  # Only restrict the actual TorrServer binary
+  # --- Profile Transition ---
+  # Transition to a confined profile when the main binary is executed
   /usr/bin/torrserver cx -> torrserver_bin,
 
-  # --- [ CHILD PROCESS (TorrServer) ] ---
+  # --- Child Process (TorrServer Binary) ---
   profile torrserver_bin flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/base>
     #include <abstractions/nameservice>
     #include <abstractions/ssl_certs>
 
-    # Network
+    # Network access for BitTorrent and WebUI
     network,
 
-    # Signals
+    # Allow receiving control signals from the parent process
     signal (receive) peer=torrserver,
 
-    # Data Access
+    # Application specific storage access
     /config/** rwk,
     /share/** rw,
     /data/** rw,
     /tmp/** rwk,
 
-    # Self-read
+    # Allow the binary to read itself
     /usr/bin/torrserver r,
 
-    # Go Runtime
+    # Go runtime system requirements
     /proc/self/status r,
     /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
     /proc/sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
+    /sys/devices/system/cpu/** r,
 
-    # Logs
+    # Logging
     /dev/stdout rw,
     /dev/stderr rw,
     /dev/tty rw,
