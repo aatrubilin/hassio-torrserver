@@ -1,6 +1,5 @@
 #include <tunables/global>
 
-# Main addon profile
 profile torrserver flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
   #include <abstractions/bash>
@@ -9,13 +8,15 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
   # --- [ PARENT PROCESS PERMISSIONS (S6 + Bashio + run.sh) ] ---
 
   # CRITICAL: Allow S6-Overlay entrypoint
-  /init ix,
+  /init rix,
 
   # Allow standard system utilities.
   # Restricting this too much causes crashes because Bashio/S6 use many tools (grep, cat, rm, date, etc.)
   # Security is handled by isolating the child process below.
   /bin/** ix,
   /usr/bin/** ix,
+  /sbin/** ix,
+  /usr/sbin/** ix,
 
   # Bashio specific library access
   /usr/lib/bashio/** ix,
@@ -24,6 +25,7 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
   /run/s6/** ix,
   /etc/services.d/** rix,
   /etc/cont-init.d/** rix,
+  /etc/s6-overlay/** rix,
 
   # Home Assistant persistent storage paths
   /data/** rw,
@@ -43,10 +45,11 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
   # --- [ CHILD PROCESS (The actual Server) ] ---
   profile torrserver_bin flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/base>
-    #include <abstractions/nameservice> # Required for DNS resolution
-    #include <abstractions/ssl_certs>   # Required for HTTPS (TMDB API, etc.)
+    #include <abstractions/nameservice>
+    #include <abstractions/ssl_certs>
 
-    # Network: Full access for BitTorrent protocol (DHT/PEX) and WebUI network,
+    # Network: Full access for BitTorrent protocol (DHT/PEX) and WebUI
+    network,
 
     # Signals: Allow receiving signals from the parent shell/S6 (e.g., stop/kill) signal (receive) peer=torrserver,
 
