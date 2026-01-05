@@ -1,53 +1,72 @@
 #include <tunables/global>
 
+# Main addon profile
 profile torrserver flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
+  #include <abstractions/bash>
+  #include <abstractions/ssl_certs>
 
-  # Capabilities
-  file,
-  signal (send) set=(kill,term,int,hup,cont),
-  network,
+  # --- [ PARENT PROCESS PERMISSIONS (S6 + Bashio + run.sh) ] ---
 
-  # S6-Overlay
+  # CRITICAL: Allow S6-Overlay entrypoint
   /init ix,
+
+  # Allow standard system utilities.
+  # Restricting this too much causes crashes because Bashio/S6 use many tools (grep, cat, rm, date, etc.)
+  # Security is handled by isolating the child process below.
   /bin/** ix,
   /usr/bin/** ix,
-  /run/{s6,s6-rc*,service}/** ix,
-  /package/** ix,
-  /command/** ix,
-  /etc/services.d/** rwix,
-  /etc/cont-init.d/** rwix,
-  /etc/cont-finish.d/** rwix,
+
+  # Bashio specific library access
+  /usr/lib/bashio/** ix,
+
+  # S6-Overlay service definitions
+  /run/s6/** ix,
+  /etc/services.d/** rix,
+  /etc/cont-init.d/** rix,
+
+  # Home Assistant persistent storage paths
+  /data/** rw,
+  /config/** rwk,      # TorrServer configs and accs.db
+  /share/** rw,        # Shared folder for media/torrents
+
+  # Temporary files and system runtime
+  /tmp/** rwk,
   /run/{,**} rwk,
   /dev/tty rw,
 
-  # Bashio
-  /usr/lib/bashio/** ix,
-  /tmp/** rwk,
+  # --- [ PROFILE TRANSITION ] ---
 
-  # Access to options.json and other files within your addon
-  /data/** rw,
+  # Transition to a dedicated restricted profile when executing the binary
+  /usr/bin/torrserver cx -> torrserver_bin,
 
-  # Start new profile for service
-  /usr/bin/myprogram cx -> myprogram,
-
-  profile myprogram flags=(attach_disconnected,mediate_deleted) {
+  # --- [ CHILD PROCESS (The actual Server) ] ---
+  profile torrserver_bin flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/base>
+    #include <abstractions/nameservice> # Required for DNS resolution
+    #include <abstractions/ssl_certs>   # Required for HTTPS (TMDB API, etc.)
 
-    # Receive signals from S6-Overlay
-    signal (receive) peer=*_torrserver,
+    # Network: Full access for BitTorrent protocol (DHT/PEX) and WebUI network,
 
-    # Access to options.json and other files within your addon
-    /data/** rw,
+    # Signals: Allow receiving signals from the parent shell/S6 (e.g., stop/kill) signal (receive) peer=torrserver,
 
-    # Access to mapped volumes specified in config.json
+    # Data access
+    /config/** rwk,
     /share/** rw,
+    /data/** rw,
+    /tmp/** rwk,
 
-    # Access required for service functionality
-    /usr/bin/myprogram r,
-    /bin/bash rix,
-    /bin/echo ix,
-    /etc/passwd r,
+    # Allow the binary to read itself (required for execution)
+    /usr/bin/torrserver r,
+
+    # Go runtime specific requirements for memory management and monitoring
+    /proc/self/status r,
+    /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
+    /proc/sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
+
+    # Standard output and logging
+    /dev/stdout rw,
+    /dev/stderr rw,
     /dev/tty rw,
   }
 }
