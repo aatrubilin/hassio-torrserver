@@ -5,69 +5,68 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/bash>
   #include <abstractions/ssl_certs>
 
-  # --- [ PARENT PROCESS PERMISSIONS (S6 + Bashio + run.sh) ] ---
+  # --- [ PARENT PROCESS (S6 + Bashio + System) ] ---
 
-  # CRITICAL: Allow S6-Overlay entrypoint
+  # 1. Entrypoint & S6 Core
   /init rix,
 
-  # Allow standard system utilities.
-  # Restricting this too much causes crashes because Bashio/S6 use many tools (grep, cat, rm, date, etc.)
-  # Security is handled by isolating the child process below.
+  # 2. System binaries (Standard)
   /bin/** ix,
   /usr/bin/** ix,
   /sbin/** ix,
   /usr/sbin/** ix,
 
-  # Bashio specific library access
+  # 3. S6-Overlay & Bashio SPECIFIC PATHS (FIX FOR YOUR ERROR)
+  # S6 stores binaries in /package and symlinks them to /command
+  /package/** ix,
+  /command/** ix,
+  /libexec/** ix,       # Location of s6-overlay-suexec
   /usr/lib/bashio/** ix,
 
-  # S6-Overlay service definitions
-  /run/s6/** ix,
+  # 4. Runtime & Service definitions
+  /run/** ix,           # Allow executing generated scripts in /run
   /etc/services.d/** rix,
   /etc/cont-init.d/** rix,
   /etc/s6-overlay/** rix,
 
-  # Home Assistant persistent storage paths
+  # 5. Storage Access
   /data/** rw,
-  /config/** rwk,      # TorrServer configs and accs.db
-  /share/** rw,        # Shared folder for media/torrents
-
-  # Temporary files and system runtime
+  /config/** rwk,
+  /share/** rw,
   /tmp/** rwk,
-  /run/{,**} rwk,
   /dev/tty rw,
 
   # --- [ PROFILE TRANSITION ] ---
-
-  # Transition to a dedicated restricted profile when executing the binary
+  # Only restrict the actual TorrServer binary
   /usr/bin/torrserver cx -> torrserver_bin,
 
-  # --- [ CHILD PROCESS (The actual Server) ] ---
+  # --- [ CHILD PROCESS (TorrServer) ] ---
   profile torrserver_bin flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/base>
     #include <abstractions/nameservice>
     #include <abstractions/ssl_certs>
 
-    # Network: Full access for BitTorrent protocol (DHT/PEX) and WebUI
+    # Network
     network,
 
-    # Signals: Allow receiving signals from the parent shell/S6 (e.g., stop/kill) signal (receive) peer=torrserver,
+    # Signals (FIXED SYNTAX: moved to new line)
+    signal (receive) peer=torrserver,
 
-    # Data access
+    # Data Access
     /config/** rwk,
     /share/** rw,
     /data/** rw,
     /tmp/** rwk,
 
-    # Allow the binary to read itself (required for execution)
+    # Self-read
     /usr/bin/torrserver r,
 
-    # Go runtime specific requirements for memory management and monitoring
+    # Go Runtime
     /proc/self/status r,
     /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
     /proc/sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
 
-    # Standard output and logging
+    # Logs
     /dev/stdout rw,
     /dev/stderr rw,
     /dev/tty rw,
