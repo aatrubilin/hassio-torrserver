@@ -9,6 +9,7 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
 
   # S6-Overlay entrypoint
   /init rix,
+  /run.sh rix,
 
   # System binaries required for initialization scripts and Bashio
   /bin/** rix,
