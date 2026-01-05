@@ -44,9 +44,10 @@ then
     PASSWORD=$(bashio::config "logins[${key}].password")
 
     # Warning if password is not safe
-    if ! bashio::config.is_safe_password "${PASSWORD}"; then
-      bashio::log.warning "Password for user '${USERNAME}' is not safe!"
-    fi
+    # Disabled while haveibeenpwned.com is blocked in russia
+    # if ! bashio::config.is_safe_password "${PASSWORD}"; then
+    #   bashio::log.warning "Password for user '${USERNAME}' is not safe!"
+    # fi
 
     jq_args+=( --arg "${USERNAME}" "${PASSWORD}" )
     bashio::log.info "HTTPAuth: Added '${USERNAME}' user"
