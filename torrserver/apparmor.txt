@@ -7,40 +7,39 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
 
   # --- Parent Process (S6-Overlay + Bashio + run.sh) ---
 
-  # S6-Overlay entrypoint
+  # 1. Entrypoints
   /init rix,
   /run.sh rix,
 
-  # System binaries required for initialization scripts and Bashio
+  # 2. System binaries
   /bin/** rix,
   /usr/bin/** rix,
   /sbin/** rix,
   /usr/sbin/** rix,
 
-  # S6-Overlay v3 specific binary paths
+  # 3. S6/Bashio binaries
   /package/** rix,
   /command/** rix,
   /libexec/** rix,
   /usr/lib/bashio/** rix,
 
-  # Runtime directory access
-  # S6 generates and executes scripts in /run during startup (requires write + execute)
+  # 4. Runtime directories (Create/Execute scripts)
   /run/ rwk,
   /run/** rwkix,
   /var/run/ rwk,
   /var/run/** rwkix,
 
-  # Service definitions and overlay configurations
+  # 5. Service configs
   /etc/services.d/** rix,
   /etc/cont-init.d/** rix,
   /etc/s6-overlay/** rix,
 
-  # Persistent storage access
+  # 6. Storage
   /data/** rw,
   /config/** rwk,
   /share/** rw,
 
-  # Temporary files and standard devices
+  # 7. Devices & Temp
   /tmp/** rwk,
   /dev/tty rw,
   /dev/console rw,
@@ -52,7 +51,6 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
   /dev/pts/* rw,
 
   # --- Profile Transition ---
-  # Transition to a confined profile when the main binary is executed
   /usr/bin/torrserver cx -> torrserver_bin,
 
   # --- Child Process (TorrServer Binary) ---
@@ -61,30 +59,38 @@ profile torrserver flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/nameservice>
     #include <abstractions/ssl_certs>
 
-    # Network access for BitTorrent and WebUI
+    # 1. Capability to bind network ports
+    capability net_bind_service,
+
+    # 2. UPX binaries need 'm' (map) permission to unpack in memory
+    /usr/bin/torrserver mr,
+
+    # 3. Network features
     network,
 
-    # Allow receiving control signals from the parent process
-    signal (receive) peer=torrserver,
+    # 4. Go runtime usually panics if it can't read network tuning params
+    @{PROC}/sys/net/** r,
+    @{PROC}/sys/kernel/** r,
 
-    # Application specific storage access
+    # Allow reading general system info (prevents Go runtime crashes)
+    @{PROC}/meminfo r,
+    @{PROC}/cpuinfo r,
+    @{PROC}/self/** r,
+    /sys/devices/** r,
+    /sys/kernel/mm/** r,
+
+    # 5. Standard Data Paths
     /config/** rwk,
     /share/** rw,
     /data/** rw,
     /tmp/** rwk,
 
-    # Allow the binary to read itself
-    /usr/bin/torrserver r,
-
-    # Go runtime system requirements
-    /proc/self/status r,
-    /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
-    /proc/sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
-    /sys/devices/system/cpu/** r,
-
-    # Logging
+    # 6. Logging
     /dev/stdout rw,
     /dev/stderr rw,
     /dev/tty rw,
+
+    # Allow signal reception
+    signal (receive) peer=torrserver,
   }
 }
