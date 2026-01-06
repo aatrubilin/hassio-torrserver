@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.2-MatriX.137 [2026-01-06]
+
+### 🐛 Fixes
+
+- 🛡️ Rollback apparmor
+
 ## 1.5.1-MatriX.137 [2026-01-05]
 
 ### 🐛 Fixes

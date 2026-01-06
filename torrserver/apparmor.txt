@@ -2,95 +2,52 @@
 
 profile torrserver flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
-  #include <abstractions/bash>
-  #include <abstractions/ssl_certs>
 
-  # --- Parent Process (S6-Overlay + Bashio + run.sh) ---
+  # Capabilities
+  file,
+  signal (send) set=(kill,term,int,hup,cont),
+  network,
 
-  # 1. Entrypoints
-  /init rix,
-  /run.sh rix,
-
-  # 2. System binaries
-  /bin/** rix,
-  /usr/bin/** rix,
-  /sbin/** rix,
-  /usr/sbin/** rix,
-
-  # 3. S6/Bashio binaries
-  /package/** rix,
-  /command/** rix,
-  /libexec/** rix,
-  /usr/lib/bashio/** rix,
-
-  # 4. Runtime directories (Create/Execute scripts)
-  /run/ rwk,
-  /run/** rwkix,
-  /var/run/ rwk,
-  /var/run/** rwkix,
-
-  # 5. Service configs
-  /etc/services.d/** rix,
-  /etc/cont-init.d/** rix,
-  /etc/s6-overlay/** rix,
-
-  # 6. Storage
-  /data/** rw,
-  /config/** rwk,
-  /share/** rw,
-
-  # 7. Devices & Temp
-  /tmp/** rwk,
+  # S6-Overlay
+  /init ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+  /run/{,**} rwk,
   /dev/tty rw,
-  /dev/console rw,
-  /dev/null rw,
-  /dev/zero rw,
-  /dev/random rw,
-  /dev/urandom rw,
-  /dev/ptmx rw,
-  /dev/pts/* rw,
 
-  # --- Profile Transition ---
-  /usr/bin/torrserver cx -> torrserver_bin,
+  # Bashio
+  /usr/lib/bashio/** ix,
+  /tmp/** rwk,
 
-  # --- Child Process (TorrServer Binary) ---
-  profile torrserver_bin flags=(attach_disconnected,mediate_deleted) {
+  # Access to options.json and other files within your addon
+  /data/** rw,
+
+  # Start new profile for service
+  /usr/bin/myprogram cx -> myprogram,
+
+  profile myprogram flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/base>
-    #include <abstractions/nameservice>
-    #include <abstractions/ssl_certs>
 
-    # 1. Capability to bind network ports
-    capability net_bind_service,
+    # Receive signals from S6-Overlay
+    signal (receive) peer=*_torrserver,
 
-    # 2. UPX binaries need 'm' (map) permission to unpack in memory
-    /usr/bin/torrserver mr,
-
-    # 3. Network features
-    network,
-
-    # 4. Go runtime usually panics if it can't read network tuning params
-    @{PROC}/sys/net/** r,
-    @{PROC}/sys/kernel/** r,
-
-    # Allow reading general system info (prevents Go runtime crashes)
-    @{PROC}/meminfo r,
-    @{PROC}/cpuinfo r,
-    @{PROC}/self/** r,
-    /sys/devices/** r,
-    /sys/kernel/mm/** r,
-
-    # 5. Standard Data Paths
-    /config/** rwk,
-    /share/** rw,
+    # Access to options.json and other files within your addon
     /data/** rw,
-    /tmp/** rwk,
 
-    # 6. Logging
-    /dev/stdout rw,
-    /dev/stderr rw,
+    # Access to mapped volumes specified in config.json
+    /share/** rw,
+
+    # Access required for service functionality
+    /usr/bin/myprogram r,
+    /bin/bash rix,
+    /bin/echo ix,
+    /etc/passwd r,
     /dev/tty rw,
-
-    # Allow signal reception
-    signal (receive) peer=torrserver,
   }
 }
