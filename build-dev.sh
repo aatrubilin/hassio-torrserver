@@ -46,17 +46,12 @@ cp -r "${BUILD_DIR}/customize/"* "${SRC_DIR}/"
 # --- BUILD ---
 echo "▶️ Building Docker image using buildx..."
 
-# The TMDB API key is optional. An empty string is passed by default.
-# If you need to pass a key, you can change this line:
-# TMDB_API_KEY_VALUE="YOUR_TMDB_API_KEY"
-TMDB_API_KEY_VALUE=""
 
 # This Dockerfile requires buildx. We specify the platform for the current host (M1 Mac).
 docker buildx build \
     --platform "${PLATFORM}" \
     --build-arg BUILD_ARCH="${ARCH}" \
     --build-arg BUILD_TYPE=debug \
-    --build-arg TMDB_API_KEY="${TMDB_API_KEY_VALUE}" \
     -t "${IMAGE_NAME}:${VERSION}-${ARCH}" \
     --load \
     "${BUILD_DIR}"

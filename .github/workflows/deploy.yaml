@@ -124,8 +124,6 @@ jobs:
             ghcr.io/${{ needs.prepare.outputs.REPO }}/${{ matrix.architecture }}:latest
           build-args: |
             BUILD_ARCH=${{ matrix.architecture }}
-          secrets: |
-            "tmdb_api_key=${{ secrets.REACT_APP_TMDB_API_KEY }}"
 
       # This ugly bit is necessary, or our cache will grow forever...
       # Well until we hit GitHub's limit of 5GB :)
