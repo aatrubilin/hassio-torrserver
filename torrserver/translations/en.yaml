@@ -29,11 +29,7 @@ configuration:
     description: "If not set, will be taken from db (if stored previously) or default self-signed certificate/key will be generated"
   proxymode:
     name: "🕵️ Proxy mode"
-    options:
-      disabled: "🚫 Disabled"
-      tracker: "🌐 HTTP trackers only"
-      peers: "🤝 Peer connections only"
-      full: "🛡️ All traffic"
+    description: "`tracker`: http trackers, `peers`: peer connections, `full`: all traffic"
   proxyurl:
     name: "🔗 Proxy url"
     description: "http, socks4, socks5, socks5h. Example: `socks5h://user:password@example.com:2080`"
