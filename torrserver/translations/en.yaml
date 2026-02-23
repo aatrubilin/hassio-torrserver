@@ -1,41 +1,45 @@
 ---
 configuration:
   port:
-    name: "HTTP port"
+    name: "🔌 HTTP port"
     description: "Ingress mode works only with 8090 port"
   httpauth:
-    name: "HTTP auth"
+    name: "🔒 HTTP auth"
     description: "Enable/disable basic access authentication"
   logins:
-    name: "Logins"
+    name: "👥 Logins"
     description: "Users list"
   tgtoken:
-    name: "Telegram bot token"
+    name: "🤖 Telegram bot token"
     description: "I.e. `123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`"
   m3u_custom_host:
-    name: "Custom host for M3U playlist links"
+    name: "📺 Custom host for M3U playlist links"
     description: "I.e. `http://homeassistant:8090`, leave empty to disable"
   ssl:
-    name: "Enable SSL"
+    name: "🛡️ Enable SSL"
     description: "Enables https for web server"
   ssl_port:
-    name: "SSL port"
+    name: "🔌 SSL port"
     description: "Web server https port"
   ssl_cert:
-    name: "SSL certificate"
+    name: "📜 SSL certificate"
     description: "If not set, will be taken from db (if stored previously) or default self-signed certificate/key will be generated."
   ssl_key:
-    name: "SSL private key"
+    name: "🔑 SSL private key"
     description: "If not set, will be taken from db (if stored previously) or default self-signed certificate/key will be generated"
   proxymode:
-    name: "Proxy mode"
-    description: "`tracker`: http trackers, `peers`: peer connections, `full`: all traffic"
+    name: "🕵️ Proxy mode"
+    options:
+      disabled: "🚫 Disabled"
+      tracker: "🌐 HTTP trackers only"
+      peers: "🤝 Peer connections only"
+      full: "🛡️ All traffic"
   proxyurl:
-    name: "Proxy url"
+    name: "🔗 Proxy url"
     description: "http, socks4, socks5, socks5h. Example: `socks5h://user:password@example.com:2080`"
   weblog:
-    name: "Weblog"
+    name: "📝 Weblog"
     description: "Enable web access log"
 network:
-  8090/tcp: "The http port to access TorrServer"
-  8091/tcp: "The https port to access TorrServer"
+  8090/tcp: "🌐 The http port to access TorrServer"
+  8091/tcp: "🔒 The https port to access TorrServer"

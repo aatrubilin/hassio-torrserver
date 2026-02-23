@@ -80,7 +80,7 @@ fi
 # Ssl
 if [[ "$(bashio::config 'ssl')" = true ]]
 then
-  bashio::log.info "ssl: enabled"
+  bashio::log.info "SSL: enabled"
   SSL_PORT=$(bashio::config "ssl_port")
   FLAGS="${FLAGS} --ssl --sslport=${SSL_PORT}"
   SSL_PATH="${TS_CONF_PATH}/.ssl"
@@ -90,7 +90,7 @@ then
     SSL_CERT_PATH="${SSL_PATH}/cert.pem"
     write_pem_block "$SSL_CERT" $SSL_CERT_PATH "CERTIFICATE"
     FLAGS="${FLAGS} --sslcert=${SSL_CERT_PATH}"
-    bashio::log.info "ssl: added cert to ${SSL_CERT_PATH}"
+    bashio::log.info "SSL: added cert to ${SSL_CERT_PATH}"
   fi
   SSL_KEY=$(bashio::config "ssl_key")
   if [ ! -d "$SSL_KEY" ]; then
@@ -98,10 +98,10 @@ then
     SSL_KEY_PATH="${SSL_PATH}/key.pem"
     write_pem_block "$SSL_KEY" $SSL_KEY_PATH "PRIVATE KEY"
     FLAGS="${FLAGS} --sslkey=${SSL_KEY_PATH}"
-    bashio::log.info "ssl: added key to ${SSL_KEY_PATH}"
+    bashio::log.info "SSL: added key to ${SSL_KEY_PATH}"
   fi
 else
-  bashio::log.notice "ssl: disabled"
+  bashio::log.notice "SSL: disabled"
 fi
 
 # Proxy settings
