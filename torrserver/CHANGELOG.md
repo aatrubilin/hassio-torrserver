@@ -4,7 +4,9 @@
 
 ### 🚨 Breaking changes
 
-🔑 **Custom TMDB API Key Required**: The shared, built-in TMDB API key has been removed to prevent rate-limiting issues. You must now configure your personal API key via the app's UI settings.
+🔑 **Custom TMDB API Key Required**: The shared, built-in TMDB API key has been removed to prevent rate-limiting issues.
+
+You must now configure your personal API key via the app's UI settings.
 
 **How to get your key:**
 - Register or log in at [TheMovieDB.org](https://www.themoviedb.org/).
