@@ -1,5 +1,5 @@
 ---
-name: Update GHCR Download Badges
+name: badges
 
 on:
   schedule:
