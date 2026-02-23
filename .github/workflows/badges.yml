@@ -65,8 +65,8 @@ jobs:
                   with open(f"badges/{filename}.json", "w") as f:
                       json.dump(badge_data, f)
 
-              save_badge(f"{arch}_total", f"total downloads {arch}", total_count, "blue")
-              save_badge(f"{arch}_latest", f"latest downloads {arch}", latest_count, "brightgreen")
+              save_badge(f"{arch}_total", f"Downloads total ({arch})", total_count, "blue")
+              save_badge(f"{arch}_latest", f"Downloads latest ({arch})", latest_count, "brightgreen")
 
       - name: Commit and push badges
         uses: peaceiris/actions-gh-pages@v4
