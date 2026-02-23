@@ -41,23 +41,32 @@ jobs:
               req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
               try:
                   html = urllib.request.urlopen(req).read().decode("utf-8")
-                  match = re.search(r"Total downloads[\s\S]{1,150}?([0-9\.,]+[kKmM]?)", html, re.IGNORECASE)
-                  count = match.group(1).strip() if match else "unknown"
+
+                  total_match = re.search(r"Total downloads[\s\S]{1,50}?<[^>]+>([\d\.,]+[kKmM]?)<", html, re.IGNORECASE)
+                  total_count = total_match.group(1).strip() if total_match else "unknown"
+
+                  latest_match = re.search(r"class=\"Box-row[\s\S]{1,300}?>([\d\.,]+[kKmM]?)\s+downloads<", html, re.IGNORECASE)
+                  latest_count = latest_match.group(1).strip() if latest_match else "unknown"
+
               except Exception as e:
                   print(f"Error fetching {url}: {e}")
-                  count = "error"
+                  total_count = "error"
+                  latest_count = "error"
 
-              print(f"{arch} downloads: {count}")
+              print(f"{arch} - Total: {total_count}, Latest: {latest_count}")
 
-              badge_data = {
-                  "schemaVersion": 1,
-                  "label": f"downloads {arch}",
-                  "message": count,
-                  "color": "blue"
-              }
+              def save_badge(filename, label, count, color):
+                  badge_data = {
+                      "schemaVersion": 1,
+                      "label": label,
+                      "message": count,
+                      "color": color
+                  }
+                  with open(f"badges/{filename}.json", "w") as f:
+                      json.dump(badge_data, f)
 
-              with open(f"badges/{arch}.json", "w") as f:
-                  json.dump(badge_data, f)
+              save_badge(f"{arch}_total", f"total downloads {arch}", total_count, "blue")
+              save_badge(f"{arch}_latest", f"latest downloads {arch}", latest_count, "brightgreen")
 
       - name: Commit and push badges
         uses: peaceiris/actions-gh-pages@v4
