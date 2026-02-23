@@ -1,4 +1,4 @@
-# TorrServer addon for Home Assistant
+# TorrServer app for Home Assistant
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/aatrubilin/hassio-torrserver)](https://github.com/aatrubilin/hassio-torrserver)
 
@@ -51,7 +51,7 @@ You can [open an issue here](https://github.com/aatrubilin/hassio-torrserver/iss
 The original TorrServer is developed by [@YouROK](https://github.com/YouROK).
 For more information please visit this page: [YouROK/TorrServer](https://github.com/YouROK/TorrServer)
 
-The hassio addon is brought to you by [@aatrubilin](https://github.com/aatrubilin).
+The hassio app is brought to you by [@aatrubilin](https://github.com/aatrubilin).
 
 ## License
 

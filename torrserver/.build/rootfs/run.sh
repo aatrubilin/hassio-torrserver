@@ -104,6 +104,30 @@ else
   bashio::log.notice "ssl: disabled"
 fi
 
+# Proxy settings
+if [[ "$(bashio::config 'proxymode')" != "disabled" ]]
+then
+  PROXY_MODE=$(bashio::config "proxymode")
+  PROXY_URL=$(bashio::config "proxyurl")
+
+  # Check if proxy url is not set
+  if [[ -z "${PROXY_URL}" ]]; then
+    bashio::log.error "Proxy is enabled, but 'proxyurl' is empty! Please check your configuration."
+    bashio::exit.nok
+  fi
+
+  PROXY_REGEX="^(https?|socks4a?|socks5h?)://([^:]+:[^@]+@)?[^:]+:[0-9]+$"
+  # Check is proxy url is valid
+  if [[ ! "${PROXY_URL}" =~ $PROXY_REGEX ]]; then
+    bashio::log.warning "Proxy URL format looks suspicious or invalid, but we will try to use it"
+  fi
+
+  FLAGS="${FLAGS} --proxyurl=${PROXY_URL} --proxymode=${PROXY_MODE}"
+  bashio::log.info "Proxy: enabled"
+else
+  bashio::log.notice "Proxy: disabled"
+fi
+
 # Enable web access logs
 if [[ "$(bashio::config 'weblog')" = true ]]
 then
@@ -116,6 +140,6 @@ fi
 # Starting torrserver
 export GODEBUG="madvdontneed=1"
 bashio::log.info "Starting torrserver..."
-OBFUSCATED_FLAGS=$(echo $FLAGS | sed 's/\(--tgtoken=\)[^ ]*/\1*******/')
+OBFUSCATED_FLAGS=$(echo "$FLAGS" | sed 's/\(--tgtoken=\)[^ ]*/\1*******/g; s/\(--proxyurl=\)[^ ]*/\1*******/g')
 bashio::log.info "torrserver ${OBFUSCATED_FLAGS}"
 torrserver $FLAGS

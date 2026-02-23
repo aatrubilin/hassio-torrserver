@@ -1,4 +1,4 @@
-# TorrServer addon for Home Assistant
+# TorrServer app for Home Assistant
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/aatrubilin/hassio-torrserver)](https://github.com/aatrubilin/hassio-torrserver)
 
@@ -11,7 +11,7 @@
 ![Supports armv7 Architecture](https://img.shields.io/badge/armv7-more%20likely-blue.svg)
 ![Supports i386 Architecture](https://img.shields.io/badge/i386-unknown-dbdbdc.svg)
 
-_Please keep in mind, that this addon is tested only with **HA OS**_
+_Please keep in mind, that this app is tested only with **HA OS**_
 
 This is a [TorrServer for Home Assistant](https://github.com/aatrubilin/hassio-torrserver).
 
@@ -19,4 +19,4 @@ This is a [TorrServer for Home Assistant](https://github.com/aatrubilin/hassio-t
 
 [<img src="https://raw.githubusercontent.com/aatrubilin/hassio-torrserver/master/assets/screenshot.png"/>](https://raw.githubusercontent.com/aatrubilin/hassio-torrserver/dev/assets/screenshot.png)
 
-The hassio addon is brought to you by [@aatrubilin](https://github.com/aatrubilin) based on [https://github.com/YouROK/TorrServer](https://github.com/YouROK/TorrServer)
+The hassio app is brought to you by [@aatrubilin](https://github.com/aatrubilin) based on [https://github.com/YouROK/TorrServer](https://github.com/YouROK/TorrServer)

@@ -16,7 +16,7 @@ RUN --mount=type=secret,id=tmdb_api_key,env=REACT_APP_TMDB_API_KEY \
 
 
 ### BUILD TORRSERVER MULTIARCH START ###
-FROM --platform=$BUILDPLATFORM golang:1.24.0-alpine AS builder
+FROM --platform=$BUILDPLATFORM golang:1.26.0-alpine AS builder
 
 COPY ./src /opt/src
 COPY --from=front /app/build /opt/src/web/build
@@ -51,7 +51,7 @@ FROM compressed AS source_release
 
 FROM source_${BUILD_TYPE} AS final_source
 
-FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:19.0.0 AS addon
+FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:20.0.1 AS app
 
 ENV TS_CONF_PATH="/config" \
     TS_TORR_DIR="/config/torrents"
