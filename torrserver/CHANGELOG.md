@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.0.0-MatriX.139 [2026-02-23]
+
+### 🚨 Breaking changes
+
+🔑 **Custom TMDB API Key Required**: The shared, built-in TMDB API key has been removed to prevent rate-limiting issues. You must now configure your personal API key via the app's UI settings.
+
+**How to get your key:**
+- Register or log in at [TheMovieDB.org](https://www.themoviedb.org/).
+- Go to your **Profile Settings** -> **API** section.
+- Request a new API key (choose the "for personal use" type).
+
+### ✨ New features
+
+- 🕶 Upgraded TorrServer to **MatriX.139** (changes: [MatriX.138](https://github.com/YouROK/TorrServer/releases/tag/MatriX.138) / [MatriX.139](https://github.com/YouROK/TorrServer/releases/tag/MatriX.139))
+- ⚙️ Added new addon configuration options: `proxyurl` and `proxymode`.
+
+### 🧰 Maintenance
+
+- 🔄 Renamed "addon" to "app" throughout the project to align with Home Assistant terminology.
+
 ## 1.5.2-MatriX.137 [2026-01-06]
 
 ### 🐛 Fixes
