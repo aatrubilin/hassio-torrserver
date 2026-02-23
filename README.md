@@ -11,6 +11,9 @@
 ![Supports armv7 Architecture](https://img.shields.io/badge/armv7-no-red.svg)
 ![Supports i386 Architecture](https://img.shields.io/badge/i386-no-red.svg)
 
+![Latest Downloads amd64](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/aatrubilin/hassio-torrserver/refs/heads/badges/amd64_total.json)
+![Total Downloads aarch64](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/aatrubilin/hassio-torrserver/refs/heads/badges/aarch64_total.json)
+
 This is a TorrServer for Home Assistant.
 
 🌟 Please consider supporting [this project](https://github.com/aatrubilin/hassio-torrserver) by giving it a star.
