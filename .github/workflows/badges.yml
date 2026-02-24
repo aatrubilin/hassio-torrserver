@@ -45,7 +45,7 @@ jobs:
                   total_match = re.search(r"Total downloads[\s\S]{1,50}?<[^>]+>([\d\.,]+[kKmM]?)<", html, re.IGNORECASE)
                   total_count = total_match.group(1).strip() if total_match else "unknown"
 
-                  latest_match = re.search(r"class=\"Box-row[\s\S]{1,300}?>([\d\.,]+[kKmM]?)\s+downloads<", html, re.IGNORECASE)
+                  latest_match = re.search(r"</svg>\s*([\d\.,]+[kKmM]?)\s*<span class=\"sr-only\">Version downloads</span>", html, re.IGNORECASE)
                   latest_count = latest_match.group(1).strip() if latest_match else "unknown"
 
               except Exception as e:
@@ -65,8 +65,7 @@ jobs:
                   with open(f"badges/{filename}.json", "w") as f:
                       json.dump(badge_data, f)
 
-              save_badge(f"{arch}_total", f"Downloads total ({arch})", total_count, "blue")
-              save_badge(f"{arch}_latest", f"Downloads latest ({arch})", latest_count, "brightgreen")
+              save_badge(arch, arch, f"{latest_count}/{total_count}", "blue")
 
       - name: Commit and push badges
         uses: peaceiris/actions-gh-pages@v4
