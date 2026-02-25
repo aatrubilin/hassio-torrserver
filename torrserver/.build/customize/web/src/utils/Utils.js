@@ -119,6 +119,19 @@ export const isMacOS = () => {
   return isMac && !isIOS
 }
 
+export const isDesktop = () => {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return false
+  }
+
+  const userAgent = navigator.userAgent || ''
+
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
+  const isTabletWithTouch = /Macintosh/i.test(userAgent) && navigator.maxTouchPoints > 1
+
+  return !isMobile && !isTabletWithTouch
+}
+
 /**
  * Formats bytes to classic size units (B, KB, MB, GB, TB)
  * Uses binary (1024) base for conversion
