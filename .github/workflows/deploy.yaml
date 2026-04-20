@@ -49,7 +49,7 @@ jobs:
           cp -r ./customize/* ./src/
 
       - name: 💾 Upload artifact
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: src
           path: ./torrserver/.build
