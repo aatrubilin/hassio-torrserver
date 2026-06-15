@@ -50,7 +50,7 @@ FROM compressed AS source_release
 
 FROM source_${BUILD_TYPE} AS final_source
 
-FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:20.1.1 AS app
+FROM ghcr.io/hassio-addons/base/$BUILD_ARCH:20.2.0 AS app
 
 ENV TS_CONF_PATH="/config" \
     TS_TORR_DIR="/config/torrents"
