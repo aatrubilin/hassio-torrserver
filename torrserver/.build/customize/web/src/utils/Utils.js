@@ -94,7 +94,7 @@ export const detectStandaloneApp = () => {
 
 export const isStandaloneApp = detectStandaloneApp()
 
-const detectApplePlatform = () => {
+export const detectApplePlatform = () => {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') {
     return { isMac: false, isIOS: false }
   }
