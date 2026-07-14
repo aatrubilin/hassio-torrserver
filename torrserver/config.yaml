@@ -5,7 +5,6 @@ description: TorrServer for home assistant
 image: ghcr.io/aatrubilin/hassio-torrserver/{arch}
 version: 2.0.0-MatriX.142
 url: https://github.com/aatrubilin/hassio-torrserver
-codenotary: aatrubilin@gmail.com
 init: false
 auth_api: true
 arch:
