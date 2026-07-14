@@ -4,7 +4,7 @@
 
 ### ✨ New features
 
-- 🕶 Upgraded TorrServer to **MatriX.142.1** (changes: [MatriX.142](https://github.com/YouROK/TorrServer/releases/tag/MatriX.142.1))
+- 🕶 Upgraded TorrServer to **MatriX.142.1** (changes: [MatriX.142.1](https://github.com/YouROK/TorrServer/releases/tag/MatriX.142.1))
 
 ### 🐛 Fixes
 
