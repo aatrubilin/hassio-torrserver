@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.1-MatriX.142.1 [2026-07-14]
+
+### ✨ New features
+
+- 🕶 Upgraded TorrServer to **MatriX.142.1** (changes: [MatriX.142](https://github.com/YouROK/TorrServer/releases/tag/MatriX.142.1))
+
+### 🐛 Fixes
+
+- Fixed deprecation warning for the `codenotary` field in config.
+
+# Changelog
+
 ## 2.0.0-MatriX.142 [2026-07-09]
 
 ### ✨ New features
