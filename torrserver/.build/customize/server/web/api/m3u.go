@@ -48,8 +48,8 @@ func allPlayList(c *gin.Context) {
 			if category == "uncategorized" {
 				if st.Category != "" {
 					continue
-			    }
-            } else if category != "" && st.Category != category {
+				}
+			} else if category != "" && st.Category != category {
 				continue
 			}
 			if search != "" &&
