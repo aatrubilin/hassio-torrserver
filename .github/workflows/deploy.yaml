@@ -29,7 +29,7 @@ jobs:
           VERSION_ADDON=$(echo $VERSION | cut -d "-" -f 1)
           VERSION_TS=$(echo $VERSION | cut -d "-" -f 2)
           VERSION_META=$(echo $VERSION | cut -d "-" -f 3)
-          REPO=${GITHUB_REPOSITORY}
+          REPO=${GITHUB_REPOSITORY,,}
           echo "Version: ${VERSION}"
           echo "Version ts: ${VERSION_TS}"
           echo "Version meta: ${VERSION_META}"
