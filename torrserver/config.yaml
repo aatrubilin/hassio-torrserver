@@ -2,9 +2,9 @@
 name: TorrServer
 slug: torrserver
 description: TorrServer for home assistant
-image: ghcr.io/aatrubilin/hassio-torrserver/{arch}
+image: ghcr.io/loncaster/hassio-torrserver/{arch}
 version: 2.0.1-MatriX.143
-url: https://github.com/aatrubilin/hassio-torrserver
+url: https://github.com/Loncaster/hassio-torrserver
 init: false
 auth_api: true
 arch:
