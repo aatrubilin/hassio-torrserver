@@ -9,10 +9,13 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/anacrolix/missinggo/v2/httptoo"
+	"github.com/anacrolix/torrent/bencode"
+	"github.com/anacrolix/torrent/metainfo"
 
 	sets "server/settings"
 	"server/torr"
@@ -66,16 +69,59 @@ func allPlayList(c *gin.Context) {
 	hash := ""
 	// fn=file.m3u fix forkplayer bug with end .m3u in link
 	for _, tr := range torrs {
-		list += "#EXTINF:0"
-		if tr.Poster != "" {
-			list += " tvg-logo=\"" + tr.Poster + "\""
+		if sets.BTsets != nil && sets.BTsets.MergeAllM3U {
+			if st := statusFromSpec(tr); st != nil {
+				list += getM3uList(st, host, false, "")
+			}
+		} else {
+			list += "#EXTINF:0"
+			if tr.Poster != "" {
+				list += " tvg-logo=\"" + tr.Poster + "\""
+			}
+			list += " type=\"playlist\"," + tr.Title + "\n"
+			list += host + "/stream/" + url.PathEscape(tr.Title) + ".m3u?link=" + tr.TorrentSpec.InfoHash.HexString() + "&m3u&fn=file.m3u\n"
 		}
-		list += " type=\"playlist\"," + tr.Title + "\n"
-		list += host + "/stream/" + url.PathEscape(tr.Title) + ".m3u?link=" + tr.TorrentSpec.InfoHash.HexString() + "&m3u&fn=file.m3u\n"
 		hash += tr.Hash().HexString()
 	}
 
 	sendM3U(c, "all.m3u", hash, list)
+}
+
+// statusFromSpec builds a minimal *state.TorrentStatus from locally-available
+// metadata (TorrentSpec.InfoBytes), without starting/adding the torrent to the BT engine
+func statusFromSpec(tr *torr.Torrent) *state.TorrentStatus {
+	if tr == nil || tr.TorrentSpec == nil || len(tr.TorrentSpec.InfoBytes) == 0 {
+		return nil
+	}
+
+	var info metainfo.Info
+	if err := bencode.Unmarshal(tr.TorrentSpec.InfoBytes, &info); err != nil {
+		return nil
+	}
+
+	st := new(state.TorrentStatus)
+	st.Hash = tr.TorrentSpec.InfoHash.HexString()
+	st.Title = tr.Title
+	st.Name = info.Name
+
+	files := info.UpvertedFiles()
+	sort.Slice(files, func(i, j int) bool {
+		return strings.Join(files[i].Path, "/") < strings.Join(files[j].Path, "/")
+	})
+
+	for i, f := range files {
+		path := strings.Join(f.Path, "/")
+		if path == "" {
+			path = info.Name
+		}
+		st.FileStats = append(st.FileStats, &state.TorrentFileStat{
+			Id:     i + 1,
+			Path:   path,
+			Length: f.Length,
+		})
+	}
+
+	return st
 }
 
 // playList godoc
@@ -94,6 +140,7 @@ func allPlayList(c *gin.Context) {
 func playList(c *gin.Context) {
 	hash, _ := c.GetQuery("hash")
 	_, fromlast := c.GetQuery("fromlast")
+	index := c.Query("index")
 	if hash == "" {
 		c.AbortWithError(http.StatusBadRequest, errors.New("hash is empty"))
 		return
@@ -114,7 +161,7 @@ func playList(c *gin.Context) {
 	}
 
 	host := utils.GetScheme(c) + "://" + utils.GetHost(c)
-	list := getM3uList(tor.Status(), host, fromlast)
+	list := getM3uList(tor.Status(), host, fromlast, index)
 	list = "#EXTM3U\n" + list
 	name := strings.ReplaceAll(c.Param("fname"), `/`, "") // strip starting / from param
 	if name == "" {
@@ -140,17 +187,26 @@ func sendM3U(c *gin.Context, name, hash string, m3u string) {
 	http.ServeContent(c.Writer, c.Request, name, time.Now(), bytes.NewReader([]byte(m3u)))
 }
 
-func getM3uList(tor *state.TorrentStatus, host string, fromLast bool) string {
-    var customHost string
+func getM3uList(tor *state.TorrentStatus, host string, fromLast bool, startIndex string) string {
+	var customHost string
     var ok bool
     customHost, ok = os.LookupEnv("M3U_CUSTOM_HOST")
     if ok {
         host = customHost
     }
-
 	m3u := ""
 	from := 0
-	if fromLast {
+	if startIndex != "" {
+		id, err := strconv.Atoi(startIndex)
+		if err == nil {
+			for i, f := range tor.FileStats {
+				if f.Id == id {
+					from = i
+					break
+				}
+			}
+		}
+	} else if fromLast {
 		pos := searchLastPlayed(tor)
 		if pos != -1 {
 			from = pos
