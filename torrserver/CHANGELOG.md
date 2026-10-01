@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.3-MatriX.145.1 [2026-09-25]
+## 2.0.3-MatriX.145.1 [2026-10-01]
 
 ### ✨ New features
 
