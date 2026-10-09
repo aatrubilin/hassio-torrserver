@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.4-MatriX.146 [2026-10-09]
+
+### ✨ New features
+
+- 🕶 Upgraded TorrServer to **MatriX.146** (changes: [MatriX.146](https://github.com/YouROK/TorrServer/releases/tag/MatriX.146))
+
 ## 2.0.3-MatriX.145.1 [2026-10-01]
 
 ### ✨ New features
